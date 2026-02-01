@@ -1,0 +1,68 @@
+<div>
+  @if(role === 'manager') {
+    <h2>רשימת מתנות - ניהול</h2>
+    <p-button 
+      label="הוסף מתנה" 
+      icon="pi pi-plus" 
+      severity="success" 
+      class="mb-5" 
+      (onClick)="add()">
+    </p-button>
+  }
+</div>
+
+<div class="gifts-grid">
+  @for (t of list$ | async; track t.id) {
+    <div class="gift-card">
+      <div class="image-wrapper">
+        <img [src]="t.image + '.png'" alt="gift" />
+      </div>
+
+      <div class="gift-body">
+        <div class="gift-title">{{ t.name }}</div>
+        <div class="gift-price">₪ {{ t.price }}</div>
+        <div class="gift-donor">תורם: {{ t.donorId }}</div>
+      </div>
+
+      @if(role === 'manager') {
+        <div class="gift-actions">
+          <button 
+            pButton 
+            icon="pi pi-pencil" 
+            class="p-button-rounded p-button-text p-button-info" 
+            (click)="updateGift(t.id)">
+          </button>
+          <button 
+            pButton 
+            icon="pi pi-trash" 
+            class="p-button-rounded p-button-text p-button-danger" 
+            (click)="deleteGift(t.id)">
+          </button>
+        </div>
+      }
+
+      @if(role === 'client') {
+        <div class="gift-actions">
+          <button 
+            pButton 
+            label="הוסף לסל" 
+            icon="pi pi-plus" 
+            class="p-button-rounded p-button-text p-button-success" 
+            (click)="addGiftToBasket(t)"> </button>
+        </div>
+      }
+    </div> }
+</div>
+
+@if (isEditMode) {
+  <app-add-gift 
+    [id]="selectedId" 
+    (closeEdit)="handleClose($event)">
+  </app-add-gift>
+
+}
+<app-basket-comp 
+  #basketComp
+  [userId]="userId">
+</app-basket-comp>
+

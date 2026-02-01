@@ -1,0 +1,44 @@
+<div class="donors-container" dir="rtl">
+
+    <div class="flex justify-content-between align-items-center mb-4">
+        <h2>ניהול תורמים</h2>
+        <p-button label="הוספת תורם חדש" icon="pi pi-plus" severity="success" (click)="openAddDonor()"></p-button>
+    </div>
+
+    <div class="grid">
+        @for (t of list$ | async; track t.id) {
+        <div class="col-12 md:col-6 lg:col-4 p-3">
+            <p-card [header]="t.name" [subheader]="t.email" styleClass="shadow-3">
+
+                <ng-template pTemplate="content">
+                    <div class="flex align-items-center mb-2">
+                        <i class="pi pi-id-card mr-2 ml-2"></i>
+                        <span>מזהה: <strong>{{ t.id }}</strong></span>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <div class="flex justify-content-end gap-2">
+                        <p-button (click)="updateDonor(t.id)" label="עריכה" icon="pi pi-pencil" severity="info"
+                            [outlined]="true" size="small">
+                        </p-button>
+
+                        <p-button (click)="deleteDonor(t.id)" label="מחיקה" icon="pi pi-trash" severity="danger"
+                            size="small">
+                        </p-button>
+                    </div>
+                </ng-template>
+
+            </p-card>
+        </div>
+        }
+    </div>
+</div>
+<div>
+  @if (isEditMode) {
+    <app-add-and-updte-donor 
+      [id]="selectedId" 
+      (closeEdit)="handleClose($event)">
+    </app-add-and-updte-donor>
+  }
+</div>

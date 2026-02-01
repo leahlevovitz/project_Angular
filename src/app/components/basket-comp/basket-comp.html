@@ -1,0 +1,27 @@
+<!-- basket-comp.html -->
+<div class="basket-container">
+  <h2 class="basket-title">סל קניות שלי</h2>
+
+  <div *ngIf="(list$ | async)?.length === 0" class="empty-msg">
+    הסל ריק כרגע 😔
+  </div>
+
+  <div class="basket-list">
+    <p-card *ngFor="let item of list$ | async" styleClass="gift-card">
+      <ng-template pTemplate="header">
+        <!-- {{ item.giftName || 'מתנה' }} -->
+      </ng-template>
+
+      <div class="gift-content">
+        <p>מחיר: ₪{{ item.giftId }}</p>
+        <p>תאריך הוספה: {{ item.userId}}</p>
+      </div>
+
+      <ng-template pTemplate="footer">
+        <button pButton type="button" label="הסר מהסל" icon="pi pi-trash" class="p-button-danger"
+                (click)="removeFromBasket(item.id)">
+        </button>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

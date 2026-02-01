@@ -1,0 +1,38 @@
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <p-card header="כניסה למערכת" [style]="{ width: '360px' }">
+    <div class="flex flex-column gap-3">
+      
+      <div class="flex flex-column gap-2">
+        <label for="userName">שם משתמש</label>
+        <input 
+          pInputText 
+          id="userName" 
+          formControlName="userName" />
+        <small *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched" class="p-error">
+          שדה זה הוא חובה
+        </small>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <label for="PasswordHash">סיסמה</label>
+        <input 
+          pInputText 
+          id="Password" 
+          type="password" 
+          formControlName="Password" />
+        <small *ngIf="loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched" class="p-error">
+          הסיסמה חייבת להכיל לפחות 6 תווים
+        </small>
+      </div>
+
+      <p-button 
+        label="התחבר" 
+        icon="pi pi-user" 
+        type="submit"
+        [disabled]="loginForm.invalid" 
+        [style]="{ width: '100%' }">
+      </p-button>
+      
+    </div>
+  </p-card>
+</form>

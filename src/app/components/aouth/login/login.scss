@@ -1,0 +1,17 @@
+.p-error {
+    color: #e24c4c;
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+}
+
+/* שאר ה-CSS הקודם נשאר אותו דבר */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+.flex-column { display: flex; flex-direction: column; }
+.gap-3 { gap: 1rem; }
+.gap-2 { gap: 0.5rem; }

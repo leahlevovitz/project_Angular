@@ -1,0 +1,29 @@
+/* תיקון קריטי לשדה הסיסמה של PrimeNG */
+:host ::ng-deep .p-password, 
+:host ::ng-deep .p-password input {
+    width: 100% !important;
+}
+
+/* מוודא שהאייקון של ה-Eye לא שובר את הלייאוט */
+:host ::ng-deep .p-password-toggle-mask {
+    left: 10px; /* מעביר את העין לצד שמאל בגלל ה-RTL */
+    right: auto !important;
+}
+
+/* יישור מושלם לשדות הקלט */
+input {
+    width: 100% !important;
+    text-align: right;
+    padding: 12px !important;
+}
+
+/* מניעת דחיסה של שדות ב-Row */
+.input-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.input-row > div {
+    flex: 1;
+}

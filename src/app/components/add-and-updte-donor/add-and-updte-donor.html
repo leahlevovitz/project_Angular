@@ -1,0 +1,38 @@
+<p-dialog   [(visible)]="visible"
+        [modal]="true"
+          [closable]="false"
+          [style]="{ width: '420px' }"
+          [header]="id === -1 ? 'הוספת תורם' : 'עריכת תורם'">
+
+  <form [formGroup]="formDonor" (ngSubmit)="saveDonor()" class="donor-form">
+
+    <!-- שדה שם -->
+    <div class="field">
+      <label for="name">שם</label>
+      <input pInputText id="name" type="text" formControlName="name" placeholder="הכנס שם מלא" />
+      <small class="error" *ngIf="formDonor.get('name')?.invalid && formDonor.get('name')?.touched">
+        שם חובה (לפחות 5 תווים)
+      </small>
+    </div>
+
+    <!-- שדה אימייל -->
+    <div class="field">
+      <label for="email">אימייל</label>
+      <input pInputText id="email" type="email" formControlName="email" placeholder="example@email.com" />
+      <small class="error" *ngIf="formDonor.get('email')?.invalid && formDonor.get('email')?.touched">
+        אימייל לא תקין
+      </small>
+    </div>
+
+    <!-- כפתורים -->
+    <div class="actions">
+      <button pButton type="submit" [disabled]="formDonor.invalid">
+        {{ id === -1 ? 'הוסף' : 'עדכן' }}
+      </button>
+      <button pButton type="button" class="p-button-text" (click)="finish(false)">
+        ביטול
+      </button>
+    </div>
+
+  </form>
+</p-dialog>
