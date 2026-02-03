@@ -2,7 +2,8 @@
   <p-card [header]="id === -1 ? 'הוספת מתנה חדשה' : 'עריכת מתנה'" styleClass="shadow-4">
     
     <form [formGroup]="formGift" (ngSubmit)="saveGift()" class="p-fluid grid">
-      
+
+      <!-- שם המתנה -->
       <div class="field col-12">
         <label for="name" class="font-bold block mb-2">שם המתנה</label>
         <span class="p-input-icon-left">
@@ -18,6 +19,7 @@
         <small class="p-error block mt-1" *ngIf="formGift.get('name')?.errors?.['minlength']">השם חייב להכיל לפחות 5 תווים</small>
       </div>
 
+      <!-- מזהה תורם -->
       <div class="field col-12 md:col-6">
         <label for="donorId" class="font-bold block mb-2">מזהה תורם</label>
         <p-inputNumber 
@@ -30,6 +32,7 @@
         <small class="p-error block mt-1" *ngIf="formGift.get('donorId')?.touched && formGift.get('donorId')?.errors?.['required']">חובה להזין מזהה תורם</small>
       </div>
 
+      <!-- סכום -->
       <div class="field col-12 md:col-6">
         <label for="price" class="font-bold block mb-2">סכום (₪)</label>
         <p-inputNumber 
@@ -44,7 +47,17 @@
         <small class="p-error block mt-1" *ngIf="formGift.get('price')?.errors?.['min'] || formGift.get('price')?.errors?.['max']">הסכום בין 10 ל-70 ₪</small>
       </div>
 
-      <div class="field col-12">
+      <!-- קטגוריה -->
+      <div class="field col-12 md:col-6">
+        <label for="category" class="font-bold block mb-2">קטגוריה</label>
+        <div class="card flex justify-center">
+            <p-select [options]="categories" formControlName="category" optionLabel="label" optionValue="value" placeholder="בחר קטגוריה" class="w-full md:w-56"></p-select>
+        </div>
+        <small class="p-error block mt-1" *ngIf="formGift.get('category')?.touched && formGift.get('category')?.errors?.['required']">חובה לבחור קטגוריה</small>
+      </div>
+
+      <!-- שם תמונה -->
+      <div class="field col-12 md:col-6">
         <label for="image" class="font-bold block mb-2">שם קובץ תמונה</label>
         <span class="p-input-icon-left">
           <i class="pi pi-image"></i>
@@ -58,13 +71,14 @@
         <small class="p-error block mt-1" *ngIf="formGift.get('image')?.touched && formGift.get('image')?.errors?.['required']">הכנס שם תמונה</small>
       </div>
 
+      <!-- כפתורים -->
       <div class="col-12 flex justify-content-end gap-2 mt-4">
         <p-button 
           label="ביטול" 
           icon="pi pi-times" 
           severity="secondary" 
           [outlined]="true" 
-          (onClick)="closeEdit.emit(false)" 
+          (onClick)="finish()" 
           type="button">
         </p-button>
         <p-button 
