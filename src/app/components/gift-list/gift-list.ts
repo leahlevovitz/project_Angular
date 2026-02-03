@@ -23,12 +23,12 @@ export class GiftList {
   // giftVec: GiftModel[] = [];
   private userService = inject(UserService);
   private addToBasket = inject(PurchasersService);
-   role = this.userService.getRole();
-   userId = this.userService.getUserId();
+  role = this.userService.getRole();
+  userId = this.userService.getUserId();
   giftSrv: GiftService = inject(GiftService)
 
   list$ = this.giftSrv.getAll();
-
+  id$ = this.giftSrv.getById(this.selectedId);
 
 
 
@@ -70,21 +70,20 @@ export class GiftList {
   }
 
   @Output() basketUpdated = new EventEmitter<void>();
-addGiftToBasket(gift: GiftModel) {
+  addGiftToBasket(gift: GiftModel) {
     if (!this.userId || this.userId === 0) return;
-
-    const purchaser = { id: 0, userId: this.userId, giftId: gift.id };
+    const purchaser = { id: 0, userId: this.userId, giftId: gift.id, giftImage: gift.image, giftName: gift.name, giftPrice: gift.price };
 
     this.addToBasket.addToBasket(purchaser).subscribe({
       next: () => {
         console.log('מתנה נוספה לעגלה:', purchaser);
-        
+
         // כאן הקסם קורה: קריאה ישירה למתודת הריענון של רכיב הסל
         if (this.basketChild) {
           this.basketChild.refreshBasket();
         }
-        
-        this.basketUpdated.emit(); 
+
+        this.basketUpdated.emit();
       },
       error: (err) => console.error('שגיאה בהוספה:', err)
     });

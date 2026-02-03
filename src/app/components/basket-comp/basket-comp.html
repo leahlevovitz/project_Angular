@@ -1,4 +1,3 @@
-<!-- basket-comp.html -->
 <div class="basket-container">
   <h2 class="basket-title">סל קניות שלי</h2>
 
@@ -9,17 +8,33 @@
   <div class="basket-list">
     <p-card *ngFor="let item of list$ | async" styleClass="gift-card">
       <ng-template pTemplate="header">
-        <!-- {{ item.giftName || 'מתנה' }} -->
+        <div class="card-header">
+           {{ item.giftName || 'מתנה' }}
+           <span *ngIf="item.quantity > 1" class="quantity-badge">x{{ item.quantity }}</span>
+        </div>
       </ng-template>
 
       <div class="gift-content">
-        <p>מחיר: ₪{{ item.giftId }}</p>
-        <p>תאריך הוספה: {{ item.userId}}</p>
+        <div class="image-wrapper">
+          <img
+            [src]="item.giftImage ? (item.giftImage + '.png') : 'assets/images/placeholder-gift.png'"
+            [alt]="item.giftName || 'מתנה'"
+            loading="lazy"
+            (error)="$event.target.src='assets/images/placeholder-gift.png'"
+          />
+        </div>
+
+        <div class="gift-details">
+          <p class="gift-price">מחיר ליחידה: ₪{{ item.giftPrice }}</p>
+          <p *ngIf="item.quantity > 1" class="total-item-price">
+            <strong>סה"כ: ₪{{ item.giftPrice * item.quantity }}</strong>
+          </p>
+        </div>
       </div>
 
       <ng-template pTemplate="footer">
         <button pButton type="button" label="הסר מהסל" icon="pi pi-trash" class="p-button-danger"
-                (click)="removeFromBasket(item.id)">
+          (click)="removeFromBasket(item.id)">
         </button>
       </ng-template>
     </p-card>
