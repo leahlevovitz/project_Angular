@@ -1,19 +1,18 @@
-export class GiftModel{
-    id!:number
-    name!:string
-    donorId!:number
-    price:number=20
-    category:string="All_prizes"
-    // Purchases=[]
-    // purchasersCount!:number
-    
-    image: string="1";
+export class GiftModel {
+    id!: number
+    name!: string
+    donorId!: number
+    price: number = 20
+    category: string = "All_prizes"
+    donorName!: string
+
+    image: string = "1";
 }
 
 
-export enum Category{
-     
-     All_prizes,
+export enum Category {
+
+    All_prizes,
 
     Vehicles,
 
