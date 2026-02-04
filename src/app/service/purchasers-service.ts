@@ -11,8 +11,8 @@ export class PurchasersService {
 
   private getHeaders = inject(AuthService).getHeaders;
 
-  add(purchaser: PurchasersModel) {
-    return this.httpClient.post<PurchasersModel>(this.AUTH_URL, purchaser, { headers: this.getHeaders() });
+  add(purchaser: PurchasersModel[]) {
+    return this.httpClient.post<PurchasersModel[]>(this.AUTH_URL, purchaser, { headers: this.getHeaders() });
   }
   addToBasket(purchaser: PurchasersModel) {
     return this.httpClient.post<PurchasersModel>(`${this.AUTH_URL}/Basket`, purchaser, { headers: this.getHeaders() });
