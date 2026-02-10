@@ -1,0 +1,51 @@
+<div
+    style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f8f9fa; direction: rtl;">
+
+    <div
+        style="background: white; width: 90%; max-width: 450px; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-top: 6px solid #b8860b;">
+
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h2 style="color: #1a2a6c; margin: 0; font-size: 26px; font-weight: bold;">הרשמה למכירה הסינית</h2>
+            <div style="width: 40px; height: 3px; background: #b8860b; margin: 10px auto;"></div>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">שם</label>
+                <input type="text" pInputText formControlName="FullName" placeholder="הכנס שם מלא">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">שם משתמש</label>
+                <input type="text" pInputText formControlName="userName" placeholder="הכנס שם משתמש">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">אימייל</label>
+                <input type="email" pInputText formControlName="Email" placeholder="example@mail.com">
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">סיסמה</label>
+                <p-password formControlName="PasswordHash" [feedback]="false" [toggleMask]="true"
+                    placeholder="••••"></p-password>
+            </div>
+
+            <div class="input-row" style="margin-bottom: 25px;">
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">טלפון</label>
+                    <input type="text" pInputText formControlName="phone" placeholder="050-0000000">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">כתובת</label>
+                    <input type="text" pInputText formControlName="adress" placeholder="עיר ורחוב">
+                </div>
+            </div>
+
+            <button type="submit" [disabled]="registerForm.invalid"
+                style="width: 100%; background: #b8860b; color: white; border: none; padding: 16px; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(184,134,11,0.2);">
+                להרשמה והשתתפות
+            </button>
+
+        </form>
+    </div>
+</div>

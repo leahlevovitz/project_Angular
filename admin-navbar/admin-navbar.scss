@@ -1,0 +1,22 @@
+::ng-deep {
+  .p-menubar {
+    background: #ffffff !important;
+    border: none !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    padding: 0.5rem 2rem;
+
+    .p-menuitem-link {
+      .p-menuitem-text, .p-menuitem-icon {
+        color: #64748b !important;
+      }
+      &:hover {
+        background: #f8fafc !important;
+        .p-menuitem-text, .p-menuitem-icon {
+          color: #3b82f6 !important;
+        }
+      }
+    }
+  }
+}
