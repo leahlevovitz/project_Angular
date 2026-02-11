@@ -3,7 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
-import { AdminNavbar } from './components/admin-navbar/admin-navbar'; // ← ודא שהנתיב נכון!
+import { AdminNavbar } from './components/admin-navbar/admin-navbar'; 
+
 // import { GiftList } from './components/gift-list/gift-list';
 
 @Component({

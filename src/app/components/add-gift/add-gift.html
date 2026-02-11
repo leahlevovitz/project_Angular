@@ -1,74 +1,104 @@
-<div class="add-gift-container">
-  <p-card [header]="id === -1 ? 'הוספת מתנה חדשה' : 'עריכת מתנה'" styleClass="shadow-4">
-    <form [formGroup]="formGift" (ngSubmit)="saveGift()" class="p-fluid grid">
+<p-dialog header="{{id === -1 ? 'הוספת מתנה חדשה' : 'עריכת מתנה'}}"
+          [(visible)]="visible"
+          [modal]="true"
+          [resizable]="false"
+          [draggable]="false"
+          [closable]="false"
+          (onHide)="finish()"
+          [style]="{width: '450px'}"
+          [contentStyle]="{'padding': '1rem'}">
 
-      <!-- שם המתנה -->
-      <div class="field col-12">
-        <label for="name" class="font-bold block mb-2">שם המתנה</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-gift"></i>
-          <input pInputText id="name" formControlName="name" placeholder="הכנס את שם הפרס..."
-            [ngClass]="{'ng-invalid ng-dirty': formGift.get('name')?.invalid && formGift.get('name')?.touched}" />
-        </span>
-        <small class="p-error block mt-1" *ngIf="formGift.get('name')?.touched && formGift.get('name')?.errors?.['required']">שדה חובה</small>
-        <small class="p-error block mt-1" *ngIf="formGift.get('name')?.errors?.['minlength']">השם חייב להכיל לפחות 5 תווים</small>
-      </div>
+  <form [formGroup]="formGift" (ngSubmit)="saveGift()" class="p-fluid">
 
-      <!-- מזהה תורם -->
-      <div class="field col-12 md:col-6">
-        <label for="donorId" class="font-bold block mb-2">מזהה תורם</label>
-        <p-inputNumber id="donorId" formControlName="donorId" [useGrouping]="false" placeholder="מספר מזהה"
-          [ngClass]="{'ng-invalid ng-dirty': formGift.get('donorId')?.invalid && formGift.get('donorId')?.touched}">
-        </p-inputNumber>
-        <small class="p-error block mt-1" *ngIf="formGift.get('donorId')?.touched && formGift.get('donorId')?.errors?.['required']">חובה להזין מזהה תורם</small>
-      </div>
+    <!-- שם המתנה -->
+    <div class="field">
+      <label for="name" class="font-bold mb-1 block">שם המתנה</label>
+      <input pInputText id="name" formControlName="name" 
+             [ngClass]="{'p-invalid': formGift.get('name')?.touched && formGift.get('name')?.invalid}" 
+             class="w-full" />
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('name')?.touched && formGift.get('name')?.errors?.['required']">
+        שדה חובה
+      </small>
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('name')?.touched && formGift.get('name')?.errors?.['minlength']">
+        השם חייב להכיל לפחות 5 תווים
+      </small>
+    </div>
 
-      <!-- כמות מתנות להגרלה -->
-      <div class="field col-12 md:col-6">
-        <label for="quantity" class="font-bold block mb-2">כמות מתנות להגרלה</label>
-        <p-inputNumber id="quantity" formControlName="quantity" [useGrouping]="false" placeholder="מספר מתנות"
-          [ngClass]="{'ng-invalid ng-dirty': formGift.get('quantity')?.invalid && formGift.get('quantity')?.touched}">
-        </p-inputNumber>
-        <small class="p-error block mt-1" *ngIf="formGift.get('quantity')?.touched && formGift.get('quantity')?.errors?.['required']">שדה חובה</small>
-        <small class="p-error block mt-1" *ngIf="formGift.get('quantity')?.errors?.['min']">מספר המתנות חייב להיות לפחות 1</small>
-      </div>
+    <!-- מזהה תורם -->
+    <div class="field">
+      <label for="donorId" class="font-bold mb-1 block">מזהה תורם</label>
+      <p-inputNumber id="donorId" formControlName="donorId" [useGrouping]="false" 
+                     [ngClass]="{'p-invalid': formGift.get('donorId')?.touched && formGift.get('donorId')?.invalid}" 
+                     class="w-full"></p-inputNumber>
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('donorId')?.touched && formGift.get('donorId')?.errors?.['required']">
+        שדה חובה
+      </small>
+    </div>
 
-      <!-- סכום -->
-      <div class="field col-12 md:col-6">
-        <label for="price" class="font-bold block mb-2">סכום (₪)</label>
-        <p-inputNumber id="price" formControlName="price" mode="currency" currency="ILS" locale="he-IL"
-          [ngClass]="{'ng-invalid ng-dirty': formGift.get('price')?.invalid && formGift.get('price')?.touched}">
-        </p-inputNumber>
-        <small class="p-error block mt-1" *ngIf="formGift.get('price')?.touched && formGift.get('price')?.errors?.['required']">שדה חובה</small>
-        <small class="p-error block mt-1" *ngIf="formGift.get('price')?.errors?.['min'] || formGift.get('price')?.errors?.['max']">הסכום בין 10 ל-70 ₪</small>
-      </div>
+    <!-- סכום -->
+    <div class="field">
+      <label for="price" class="font-bold mb-1 block">סכום (₪)</label>
+      <p-inputNumber id="price" formControlName="price" mode="currency" currency="ILS" locale="he-IL" 
+                     [ngClass]="{'p-invalid': formGift.get('price')?.touched && formGift.get('price')?.invalid}" 
+                     class="w-full"></p-inputNumber>
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('price')?.touched && formGift.get('price')?.errors?.['required']">
+        שדה חובה
+      </small>
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('price')?.touched && 
+                    (formGift.get('price')?.errors?.['min'] || formGift.get('price')?.errors?.['max'])">
+        הסכום חייב להיות בין 20 ל-150 ₪
+      </small>
+    </div>
 
-      <!-- קטגוריה -->
-      <div class="field col-12 md:col-6">
-        <label for="category" class="font-bold block mb-2">קטגוריה</label>
-        <div class="card flex justify-center">
-          <p-select [options]="categories" formControlName="category" optionLabel="label" optionValue="value" placeholder="בחר קטגוריה" class="w-full md:w-56"></p-select>
-        </div>
-        <small class="p-error block mt-1" *ngIf="formGift.get('category')?.touched && formGift.get('category')?.errors?.['required']">חובה לבחור קטגוריה</small>
-      </div>
+    <!-- כמות מתנות להגרלה -->
+    <div class="field">
+      <label for="quantity" class="font-bold mb-1 block">כמות מתנות להגרלה</label>
+      <p-inputNumber id="quantity" formControlName="quantity" [useGrouping]="false" 
+                     [ngClass]="{'p-invalid': formGift.get('quantity')?.touched && formGift.get('quantity')?.invalid}" 
+                     class="w-full"></p-inputNumber>
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('quantity')?.touched && formGift.get('quantity')?.errors?.['required']">
+        שדה חובה
+      </small>
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('quantity')?.touched && formGift.get('quantity')?.errors?.['min']">
+        המספר חייב להיות לפחות 1
+      </small>
+    </div>
 
-      <!-- שם תמונה -->
-      <div class="field col-12 md:col-6">
-        <label for="image" class="font-bold block mb-2">שם קובץ תמונה</label>
-        <span class="p-input-icon-left">
-          <i class="pi pi-image"></i>
-          <input pInputText id="image" formControlName="image" placeholder="image-name.jpg"
-            [ngClass]="{'ng-invalid ng-dirty': formGift.get('image')?.invalid && formGift.get('image')?.touched}" />
-        </span>
-        <small class="p-error block mt-1" *ngIf="formGift.get('image')?.touched && formGift.get('image')?.errors?.['required']">הכנס שם תמונה</small>
-      </div>
+    <!-- קטגוריה -->
+    <div class="field">
+      <label for="category" class="font-bold mb-1 block">קטגוריה</label>
+      <p-select id="category" [options]="categories" formControlName="category" optionLabel="label" optionValue="value" 
+                [ngClass]="{'p-invalid': formGift.get('category')?.touched && formGift.get('category')?.invalid}" 
+                class="w-full"></p-select>
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('category')?.touched && formGift.get('category')?.errors?.['required']">
+        חובה לבחור קטגוריה
+      </small>
+    </div>
 
-      <!-- כפתורים -->
-      <div class="col-12 flex justify-content-end gap-2 mt-4">
-        <p-button label="ביטול" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="finish()" type="button"></p-button>
-        <p-button label="שמירת מתנה" icon="pi pi-check" severity="primary" [disabled]="formGift.invalid" type="submit"></p-button>
-      </div>
+    <!-- שם קובץ תמונה -->
+    <div class="field">
+      <label for="image" class="font-bold mb-1 block">שם קובץ תמונה</label>
+      <input pInputText id="image" formControlName="image" class="w-full" 
+             [ngClass]="{'p-invalid': formGift.get('image')?.touched && formGift.get('image')?.invalid}" />
+      <small class="p-error block mt-1" 
+             *ngIf="formGift.get('image')?.touched && formGift.get('image')?.errors?.['required']">
+        שדה חובה
+      </small>
+    </div>
 
-    </form>
-  </p-card>
-</div>
+    <!-- כפתורים -->
+    <div class="flex justify-content-end gap-2 mt-4">
+      <p-button label="ביטול" icon="pi pi-times" severity="secondary" (onClick)="finish()" type="button"></p-button>
+      <p-button label="שמירת מתנה" icon="pi pi-check" severity="primary" [disabled]="formGift.invalid" type="submit"></p-button>
+    </div>
+
+  </form>
+</p-dialog>

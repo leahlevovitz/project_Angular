@@ -1,29 +1,29 @@
-.add-gift-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  direction: rtl; // התאמה לעברית
+// .add-gift-container {
+//   max-width: 600px;
+//   margin: 2rem auto;
+//   direction: rtl; // התאמה לעברית
 
-  .p-card {
-    border-radius: 12px;
-  }
+//   .p-card {
+//     border-radius: 12px;
+//   }
 
-  .field {
-    margin-bottom: 1.5rem;
-  }
+//   .field {
+//     margin-bottom: 1.5rem;
+//   }
 
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #495057;
-  }
-}
+//   label {
+//     display: block;
+//     margin-bottom: 0.5rem;
+//     color: #495057;
+//   }
+// }
 
-// התאמה לאייקונים בצד ימין בגלל ה-RTL
-.p-input-icon-left > i {
-  left: auto;
-  right: 0.75rem;
-}
-.p-input-icon-left > .p-inputtext {
-  padding-left: 0.75rem;
-  padding-right: 2.5rem;
-}
+// // התאמה לאייקונים בצד ימין בגלל ה-RTL
+// .p-input-icon-left > i {
+//   left: auto;
+//   right: 0.75rem;
+// }
+// .p-input-icon-left > .p-inputtext {
+//   padding-left: 0.75rem;
+//   padding-right: 2.5rem;
+// }

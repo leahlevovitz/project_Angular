@@ -9,13 +9,13 @@ import { PurchasersComp } from './components/purchasers-comp/purchasers-comp';
 
 export const routes: Routes = [
   { path: 'register', component: Register, pathMatch: 'full' },
-  { path: '', component: GiftList , pathMatch: 'full' },
+  { path: '', component: GiftList, pathMatch: 'full' },
   { path: 'login', component: Login, pathMatch: 'full' },
   { path: 'gifts', component: GiftList, pathMatch: 'full' },
   { path: 'donors', component: Donors, pathMatch: 'full' },
   { path: 'app-admin-navbar', component: AdminNavbar, pathMatch: 'full' },
   { path: 'cart', component: BasketComp, pathMatch: 'full' },
   { path: 'purchaser', component: PurchasersComp, pathMatch: 'full' },
-    { path: 'register', component: Register, pathMatch: 'full' },
+  { path: 'register', component: Register, pathMatch: 'full' },
 
 ];

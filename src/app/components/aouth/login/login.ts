@@ -1,32 +1,44 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms'; // חייב ReactiveFormsModule עבור FormGroup
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 // PrimeNG
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
+// שירות משתמשים
 import { UserService } from '../../../service/user-service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  // הוספנו ReactiveFormsModule במקום FormsModule כדי לעבוד עם FormGroup
-  imports: [CommonModule, CardModule, ButtonModule, InputTextModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    PasswordModule,
+    ToastModule
+  ],
+  providers: [MessageService],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrls: ['./login.scss']
 })
 export class Login implements OnInit {
-  // הגדרות שירותים
+
   private userService = inject(UserService);
   private router = inject(Router);
+  private messageService = inject(MessageService);
 
-  loginForm!: FormGroup; // שינינו את השם ל-loginForm כדי שיהיה ברור יותר
+  loginForm!: FormGroup;
 
   ngOnInit() {
-    // יצירת הטופס עם ולידציה
     this.loginForm = new FormGroup({
       userName: new FormControl('', [Validators.required]),
       Password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -35,27 +47,27 @@ export class Login implements OnInit {
 
   onLogin() {
     if (this.loginForm.valid) {
-      // שליחת הערכים של הטופס (this.loginForm.value) לשרת
       this.userService.login(this.loginForm.value).subscribe({
-        next: (res) => {
-          // המידע (טוקן ותפקיד) נשמר ב-Service דרך ה-pipe(tap)
+        next: () => {
           const role = this.userService.getRole();
-          console.log('User role detected:', role);
-
-          // ניתוב לפי תפקיד המשתמש
+          this.messageService.add({severity:'success', summary:'התחברות', detail:'התחברת בהצלחה!'});
+          // ניתוב לפי תפקיד
           if (role === 'manager') {
             this.router.navigate(['/gifts']);
           } else {
             this.router.navigate(['/gifts']);
           }
         },
-        error: (err) => {
-          console.error('Login failed', err);
-          alert('שם משתמש או סיסמה שגויים');
+        error: () => {
+          this.messageService.add({severity:'error', summary:'שגיאה', detail:'שם משתמש או סיסמה שגויים'});
         }
       });
     } else {
-      alert('נא למלא את כל השדות בצורה תקינה');
+      this.messageService.add({severity:'warn', summary:'שגיאה', detail:'נא למלא את כל השדות בצורה תקינה'});
     }
+  }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 }

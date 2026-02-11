@@ -130,7 +130,7 @@ export class GiftList implements OnInit {
 
     // בדיקה אם המתנה נעולה (אופציונלי, לפי הלוגיקה שלך)
     if (gift.isLocked) {
-      alert('מתנה זו נעולה ולא ניתן למחוק אותה.');
+      alert('מתנה זו הוגרלה ולא ניתן למחוק אותה.');
       return;
     }
 

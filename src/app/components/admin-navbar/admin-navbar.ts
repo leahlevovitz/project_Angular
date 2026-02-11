@@ -1,124 +1,144 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { UserService } from '../../service/user-service';
 import { Router, NavigationEnd } from '@angular/router';
-import { MenubarModule } from 'primeng/menubar';
-import { CommonModule } from '@angular/common';
 import { filter, Subscription } from 'rxjs';
+import { UserService } from '../../service/user-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'admin-navbar',
   standalone: true,
-  imports: [CommonModule, MenubarModule],
-template: `
-  <div class="navbar-wrapper">
-    <div class="navbar-container shadow-4">
-      <div class="app-brand">
-        <div class="logo-circle">🎁</div>
-        <div class="brand-text">
-          <span class="main-title">LUCKY CHINESE</span>
-          <span class="sub-title">הזדמנות של פעם בחיים</span>
-        </div>
-      </div>
-      <p-menubar [model]="menuItems" class="custom-menu"></p-menubar>
+  imports: [CommonModule],
+  template: `
+  <nav class="navbar">
+    <!-- צד שמאל: ניווט -->
+    <div class="nav-section nav-left">
+      <button *ngFor="let item of leftMenu" (click)="navigate(item)" class="nav-btn">
+        {{item.label}}
+      </button>
     </div>
-  </div>
-`,
-styles: [`
-  .navbar-wrapper {
-    padding: 15px 20px;
-    background: rgba(0,0,0,0.2);
-  }
-  .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    border-radius: 50px; /* צורה מעוגלת ועדכנית */
-    padding: 5px 25px;
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  .logo-circle {
-    font-size: 2rem;
-    background: #fff;
-    border-radius: 50%;
-    width: 45px; height: 45px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .brand-text { display: flex; flex-direction: column; margin-right: 15px; }
-  .main-title { font-weight: 900; color: #fff; letter-spacing: 1px; }
-  .sub-title { font-size: 0.7rem; color: #b8860b; }
-`]
+
+    <!-- אמצע: לוגו -->
+    <div class="nav-section nav-center">
+
+    </div>
+
+    <!-- צד ימין: התחברות/יציאה -->
+    <div class="nav-section nav-right">
+      <button *ngFor="let item of rightMenu" (click)="navigate(item)" class="nav-btn">
+        {{item.label}}
+      </button>
+    </div>
+  </nav>
+  `,
+  styles: [`
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+background: linear-gradient(135deg, #ff9a9e, #fbc2eb, #a1c4fd, #c2e9fb, #f6d365, #ff9a9e);
+      padding: 10px 30px;
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .nav-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .nav-left { flex: 1; }
+    .nav-center { flex: 0 0 auto; display: flex; align-items: center; gap: 10px; }
+    .nav-right { flex: 1; justify-content: flex-end; display: flex; }
+
+    .logo-circle {
+      font-size: 2rem;
+      background: #007bff;
+      border-radius: 50%;
+      width: 55px; height: 55px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(29, 98, 124, 0.13);
+    }
+
+    .brand-text { color: #fff; display: flex; flex-direction: column; }
+    .main-title { font-weight: 900; font-size: 1.3rem; }
+    .sub-title { font-size: 0.85rem; color: #5c9f6455; }
+
+    .nav-btn {
+      background: #74527e6d;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 25px;
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover {
+      background: #c7c3b4;
+      transform: scale(1.05);
+    }
+  `]
 })
 export class AdminNavbar implements OnInit, OnDestroy {
   private userService = inject(UserService);
   private router = inject(Router);
   private subscription: Subscription = new Subscription();
 
-  menuItems: MenuItem[] = [];
+  leftMenu: any[] = [];
+  rightMenu: any[] = [];
 
-  ngOnInit(): void {
-    // 1. עדכון ראשוני
-    this.rebuildMenu();
+  ngOnInit() {
+    this.buildMenu();
 
-    // 2. האזנה לשינויי ניווט כדי למנוע את היעלמות התפריט
     const routerSub = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      this.rebuildMenu();
-    });
-
+    ).subscribe(() => this.buildMenu());
     this.subscription.add(routerSub);
   }
 
-  rebuildMenu(): void {
+  buildMenu() {
     const role = this.userService.getRole();
 
-    // ניקוי מוחלט לפני בנייה - מונע את הכפילות שראית בתמונה
-    const items: MenuItem[] = [];
-
+    // צד שמאל
+    this.leftMenu = [];
     if (role === 'manager') {
-      items.push(
-        { label: 'מתנות', icon: 'pi pi-gift', routerLink: '/gifts' },
-        { label: 'תורמים', icon: 'pi pi-users', routerLink: '/donors' },
-        { label: 'רוכשים', icon: 'pi pi-shopping-cart', routerLink: '/purchaser' },
-        
-      );
+      this.leftMenu = [
+        { label: 'מתנות', link: '/gifts' },
+        { label: 'תורמים', link: '/donors' },
+        { label: 'רוכשים', link: '/purchaser' }
+      ];
     } else if (role === 'client') {
-      items.push(
-        { label: 'מתנות', icon: 'pi pi-gift', routerLink: '/gifts' },
-        { label: 'סל קניות', icon: 'pi pi-shopping-cart', routerLink: '/cart' }
-      );
+      this.leftMenu = [
+        { label: 'מתנות', link: '/gifts' },
+        { label: 'סל קניות', link: '/cart' }
+      ];
     }
 
-    // כפתור מערכת
+    // צד ימין
+    this.rightMenu = [];
     if (role) {
-      items.push({
-        label: 'יציאה',
-        icon: 'pi pi-sign-out',
-        command: () => this.onLogout()
-      });
+      this.rightMenu = [
+        { label: 'יציאה', action: () => this.onLogout() }
+      ];
     } else {
-      items.push({
-        label: 'התחברות',
-        icon: 'pi pi-sign-in',
-        routerLink: '/login'
-      });
+      this.rightMenu = [
+        { label: 'התחברות', link: '/login' }
+      ];
     }
-
-    // עדכון המשתנה הראשי במכה אחת
-    this.menuItems = items;
   }
 
-  onLogout(): void {
+  navigate(item: any) {
+    if (item.link) this.router.navigate([item.link]);
+    if (item.action) item.action();
+  }
+
+  onLogout() {
     this.userService.logout();
-    this.router.navigate(['']).then(() => {
-      this.rebuildMenu();
-    });
+    this.router.navigate(['']).then(() => this.buildMenu());
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 }

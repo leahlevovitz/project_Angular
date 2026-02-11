@@ -1,11 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-
-// ייבוא הרכיבים של PrimeNG
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+
 import { UserService } from '../../../service/user-service';
 import { Router } from '@angular/router';
 
@@ -13,55 +15,92 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     CardModule,
     InputTextModule,
     PasswordModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './register.html',
-  styleUrls: ['./register.scss'] // וודא שהקובץ קיים או השאר []
+  styleUrls: ['./register.scss']
 })
 export class Register implements OnInit {
   registerForm!: FormGroup;
+
   private userService = inject(UserService);
-  private router = inject(Router);
+  public router = inject(Router);
+  private messageService = inject(MessageService);
+
   ngOnInit() {
     this.registerForm = new FormGroup({
       FullName: new FormControl('', [Validators.required]),
       userName: new FormControl('', [Validators.required]),
-      Email: new FormControl('', [Validators.required, Validators.email]),
-      PasswordHash: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      adress: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required])
+      Email: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$")
+      ]), PasswordHash: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      adress: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[a-zA-Cא-ת\\s]+$")
+      ]),
+
+      phone: new FormControl('', [
+        Validators.required,
+        Validators.pattern("^[0-9]{9,10}$")
+      ])
     });
   }
 
   onSubmit() {
-    if (this.registerForm.valid) {
-      // שליחת הנתונים מהטופס לשרת
-      this.userService.register(this.registerForm.value).subscribe({
-        next: (response) => {
-          alert('נרשמת בהצלחה!');
-          this.router.navigate(['/login']); // או נתיב אחר שתבחר
-        },
-        error: (err) => {
-          // טיפול בשגיאות מהשרת
-          this.handleError(err);
-        }
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'שגיאה',
+        detail: 'נא למלא את כל השדות בצורה תקינה'
       });
+      return;
     }
-
+    this.userService.register(this.registerForm.value).subscribe({
+      next: (res: any) => {
+        const message = typeof res === 'string' ? res : res.message || 'נרשמת בהצלחה!';
+        this.messageService.add({ severity: 'success', summary: 'הצלחה', detail: message });
+        setTimeout(() => this.router.navigate(['/login']), 700);
+      },
+      error: (err) => this.handleError(err)
+    });
   }
-  // פונקציה מסודרת להצגת שגיאות
+
   private handleError(error: any) {
     if (error.status === 400) {
-      alert('נתונים לא תקינים, בדוק שוב את הפרטים.');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'שגיאה',
+        detail: 'נתונים לא תקינים, בדוק שוב את הפרטים.'
+      });
     } else if (error.status === 409) {
-      alert('שם המשתמש או האימייל כבר קיימים במערכת.');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'שגיאה',
+        detail: 'שם המשתמש או האימייל כבר קיימים במערכת.'
+      });
+    } else if (error.status === 500) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'שגיאה בשרת',
+        detail: 'שם המשתמש כבר קיים או קרתה שגיאה פנימית.'
+      });
     } else {
-      alert('אירעה שגיאה בשרת, נסה שוב מאוחר יותר.');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'שגיאה',
+        detail: 'אירעה שגיאה בשרת, נסה שוב מאוחר יותר.'
+      });
     }
     console.error('Server Error:', error);
   }
-} // סוגר את ה-Class
+
+}

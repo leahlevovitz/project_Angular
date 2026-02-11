@@ -1,22 +1,61 @@
-::ng-deep {
-  .p-menubar {
-    background: #ffffff !important;
-    border: none !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-    border-radius: 0 !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-    padding: 0.5rem 2rem;
+// /* Navbar */
+// .navbar {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   background: linear-gradient(90deg, #1a1a1a, #2b1a47); /* שחור מט + סגול כהה */
+//   padding: 12px 40px;
+//   border-radius: 14px;
+//   box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+//   font-family: "Inter", sans-serif;
+//   color: #f5f5f5;
+//   transition: background 0.3s ease;
+// }
 
-    .p-menuitem-link {
-      .p-menuitem-text, .p-menuitem-icon {
-        color: #64748b !important;
-      }
-      &:hover {
-        background: #f8fafc !important;
-        .p-menuitem-text, .p-menuitem-icon {
-          color: #3b82f6 !important;
-        }
-      }
-    }
-  }
-}
+// .navbar:hover {
+//   background: linear-gradient(90deg, #2b1a47, #4f46e5); /* סגול מתעורר */
+// }
+
+// .nav-section {
+//   display: flex;
+//   align-items: center;
+//   gap: 20px;
+// }
+
+// .nav-left { flex: 1; }
+// .nav-center { flex: 0 0 auto; display: flex; align-items: center; gap: 15px; }
+// .nav-right { flex: 1; justify-content: flex-end; display: flex; }
+
+// /* לוגו */
+// .logo-img {
+//   height: 50px;
+//   width: auto;
+//   object-fit: contain;
+// }
+
+// .brand-text { display: flex; flex-direction: column; }
+// .main-title { font-weight: 800; font-size: 1.5rem; color: #e9e8e1; } /* זהב יוקרתי */
+// .sub-title { font-size: 0.9rem; color: #7c4dff; } /* סגול מהכרטיס */
+
+// .nav-btn {
+//   background: linear-gradient(135deg, #7c4dff, #4f46e5); /* כמו הכפתורים בכרטיס */
+//   border: none;
+//   padding: 8px 20px;
+//   border-radius: 10px;
+//   color: #f5f5f5;
+//   font-weight: 600;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+// }
+
+// .nav-btn:hover {
+//   background: linear-gradient(135deg, #4f46e5, #9b5de5); /* סגול-כחול יוקרתי */
+//   transform: translateY(-2px) scale(1.07);
+//   box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+// }
+
+// .nav-btn:active {
+//   transform: translateY(1px) scale(0.98);
+//   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+// }
