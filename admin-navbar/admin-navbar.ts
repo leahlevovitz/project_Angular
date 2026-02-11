@@ -10,11 +10,46 @@ import { filter, Subscription } from 'rxjs';
   selector: 'admin-navbar',
   standalone: true,
   imports: [CommonModule, MenubarModule],
-  template: `
-    <div class="navbar-container" style="width: 100%;">
-      <p-menubar *ngIf="menuItems.length > 0" [model]="menuItems"></p-menubar>
+template: `
+  <div class="navbar-wrapper">
+    <div class="navbar-container shadow-4">
+      <div class="app-brand">
+        <div class="logo-circle">🎁</div>
+        <div class="brand-text">
+          <span class="main-title">LUCKY CHINESE</span>
+          <span class="sub-title">הזדמנות של פעם בחיים</span>
+        </div>
+      </div>
+      <p-menubar [model]="menuItems" class="custom-menu"></p-menubar>
     </div>
-  `
+  </div>
+`,
+styles: [`
+  .navbar-wrapper {
+    padding: 15px 20px;
+    background: rgba(0,0,0,0.2);
+  }
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 50px; /* צורה מעוגלת ועדכנית */
+    padding: 5px 25px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .logo-circle {
+    font-size: 2rem;
+    background: #fff;
+    border-radius: 50%;
+    width: 45px; height: 45px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-text { display: flex; flex-direction: column; margin-right: 15px; }
+  .main-title { font-weight: 900; color: #fff; letter-spacing: 1px; }
+  .sub-title { font-size: 0.7rem; color: #b8860b; }
+`]
 })
 export class AdminNavbar implements OnInit, OnDestroy {
   private userService = inject(UserService);
@@ -49,7 +84,6 @@ export class AdminNavbar implements OnInit, OnDestroy {
         { label: 'תורמים', icon: 'pi pi-users', routerLink: '/donors' },
         { label: 'רוכשים', icon: 'pi pi-shopping-cart', routerLink: '/purchaser' },
         { label: 'דוחות', icon: 'pi pi-file', routerLink: '/reportComp' },
-        { label: 'הגרלה', icon: 'pi pi-star', routerLink: '/lottery' }
       );
     } else if (role === 'client') {
       items.push(

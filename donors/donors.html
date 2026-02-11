@@ -1,42 +1,76 @@
 <div class="donors-container" dir="rtl">
 
-    <div class="flex justify-content-between align-items-center mb-4">
-        <h2>ניהול תורמים</h2>
-        <p-button label="הוספת תורם חדש" icon="pi pi-plus" severity="success" (click)="openAddDonor()"></p-button>
+    <div class="flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="text-900 font-bold m-0">ניהול תורמים</h2>
+            <p class="text-600 mt-1">צפייה, עריכה וניהול רשימת התורמים והמתנות</p>
+        </div>
+        <p-button label="הוספת תורם חדש" icon="pi pi-plus" severity="success" (click)="openAddDonor()"
+            class="shadow-2"></p-button>
     </div>
 
-    <div class="mb-4 flex align-items-center gap-2">
-        <input type="text" placeholder="חפש (שם / אימייל / מתנה)" class="p-inputtext p-component" (input)="onFilterTerm($event)" />
+    <div class="filter-bar p-4 mb-4 shadow-1 border-round-xl bg-white flex flex-wrap align-items-center gap-3">
+        <div class="p-input-icon-left flex-grow-1">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="חפש תורם או מתנה..." class="w-full p-inputtext-sm"
+                (input)="onFilterTerm($event)" />
+        </div>
 
-        <select class="p-inputtext p-component" (change)="onFilterType($event)">
-            <option value="name">שם</option>
-            <option value="email">אימייל</option>
-            <option value="gift">מתנה</option>
+        <select class="p-inputtext p-component p-inputtext-sm" (change)="onFilterType($event)">
+            <option value="name">חיפוש לפי שם</option>
+            <option value="email">חיפוש לפי אימייל</option>
+            <option value="gift">חיפוש לפי מתנה</option>
         </select>
 
-        <p-button label="נקה" icon="pi pi-times" (click)="clearFilter()" size="small"></p-button>
+        <p-button label="נקה סינון" icon="pi pi-refresh" [outlined]="true" severity="secondary" (click)="clearFilter()"
+            size="small"></p-button>
     </div>
 
     <div class="grid">
         @for (t of list$ | async; track t.id) {
         <div class="col-12 md:col-6 lg:col-4 p-3">
-            <p-card [header]="t.name" [subheader]="t.email" styleClass="shadow-3">
+            <p-card styleClass="donor-card shadow-2 border-round-xl">
+
+                <ng-template pTemplate="header">
+                    <div class="card-header-accent"></div>
+                </ng-template>
+
+                <div class="flex flex-column gap-2">
+                    <span class="text-xl font-bold text-900">{{ t.name }}</span>
+                    <span class="text-600 flex align-items-center gap-2">
+                        <i class="pi pi-envelope text-primary"></i> {{ t.email }}
+                    </span>
+                </div>
 
                 <ng-template pTemplate="content">
-                    <div class="flex align-items-center mb-2">
-                        <i class="pi pi-id-card mr-2 ml-2"></i>
-                        <span>מזהה: <strong>{{ t.id }}</strong></span>
+                    <div class="text-xs text-400 mb-3">ID: #{{ t.id }}</div>
+
+                    <div class="gifts-section mt-3 pt-3 border-top-1 border-100">
+                        <div class="flex align-items-center mb-2 gap-2">
+                            <i class="pi pi-gift text-pink-500"></i>
+                            <span class="font-semibold text-sm">מתנות שנתרמו:</span>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2">
+                            @for (gift of t.giftList; track gift.id) {
+                            <span class="gift-badge">
+                                {{ gift.name }}
+                            </span>
+                            } @empty {
+                            <span class="text-400 font-italic text-sm">אין תרומות במערכת</span>
+                            }
+                        </div>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="footer">
-                    <div class="flex justify-content-end gap-2">
-                        <p-button (click)="updateDonor(t.id)" label="עריכה" icon="pi pi-pencil" severity="info"
-                            [outlined]="true" size="small">
+                    <div class="flex justify-content-end gap-2 mt-2">
+                        <p-button (click)="updateDonor(t.id)" icon="pi pi-pencil" severity="info" [text]="true"
+                            pTooltip="עריכת פרטים">
                         </p-button>
 
-                        <p-button (click)="deleteDonor(t.id)" label="מחיקה" icon="pi pi-trash" severity="danger"
-                            size="small">
+                        <p-button (click)="deleteDonor(t.id)" icon="pi pi-trash" severity="danger" [text]="true"
+                            pTooltip="מחיקת תורם">
                         </p-button>
                     </div>
                 </ng-template>
@@ -45,12 +79,16 @@
         </div>
         }
     </div>
+
+    @if ((list$ | async)?.length === 0) {
+    <div class="text-center p-8">
+        <i class="pi pi-search-plus text-400" style="font-size: 3rem"></i>
+        <p class="text-600 mt-3">לא נמצאו תורמים העונים לחיפוש שלך.</p>
+    </div>
+    }
 </div>
-<div>
-  @if (isEditMode) {
-    <app-add-and-updte-donor 
-      [id]="selectedId" 
-      (closeEdit)="handleClose($event)">
-    </app-add-and-updte-donor>
-  }
-</div>
+
+@if (isEditMode) {
+<app-add-and-updte-donor [id]="selectedId" (closeEdit)="handleClose($event)">
+</app-add-and-updte-donor>
+}

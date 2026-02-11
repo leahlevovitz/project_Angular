@@ -15,3 +15,20 @@
 .flex-column { display: flex; flex-direction: column; }
 .gap-3 { gap: 1rem; }
 .gap-2 { gap: 0.5rem; }
+form p-card {
+  animation: fadeUp 0.5s ease;
+}
+
+p-card .p-card-header {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+button[type="submit"] {
+  transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+  transform: scale(1.03);
+}

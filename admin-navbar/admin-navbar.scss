@@ -1,22 +1,20 @@
-::ng-deep {
-  .p-menubar {
-    background: #ffffff !important;
-    border: none !important;
-    border-bottom: 1px solid #e2e8f0 !important;
-    border-radius: 0 !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-    padding: 0.5rem 2rem;
+.navbar-container {
+  background: linear-gradient(135deg, #1c2331, #0f141c);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
 
-    .p-menuitem-link {
-      .p-menuitem-text, .p-menuitem-icon {
-        color: #64748b !important;
-      }
-      &:hover {
-        background: #f8fafc !important;
-        .p-menuitem-text, .p-menuitem-icon {
-          color: #3b82f6 !important;
-        }
-      }
-    }
-  }
+.main-title {
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, #ffd200, #ff512f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.custom-menu .p-menuitem-link {
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.custom-menu .p-menuitem-link:hover {
+  background: rgba(255,255,255,0.08) !important;
 }

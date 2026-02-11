@@ -2,7 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PurchasersService } from '../../service/purchasers-service';
 import { PurchasersModel } from '../../models/PurchasersModel';
-import { GiftModel } from '../../models/GiftModel';
 import { TotalRevenueDTO } from '../../models/TotalRevenueDTO ';
 
 @Component({
@@ -15,7 +14,6 @@ import { TotalRevenueDTO } from '../../models/TotalRevenueDTO ';
 export class PurchasersComp implements OnInit {
   private purchasersService = inject(PurchasersService);
 
-  // מערך שיחזיק את המתנות, ולכל מתנה נוסיף שדה דינמי של רוכשים
   gifts: any[] = []; 
   totalRevenue: number = 0;
   report?: TotalRevenueDTO;
@@ -24,9 +22,9 @@ export class PurchasersComp implements OnInit {
   
   ngOnInit(): void {
     this.loadInitialData();
-        this.loadReport();
-
+    this.loadReport();
   }
+
   loadReport(): void {
     this.purchasersService.getReport().subscribe({
       next: res => {
@@ -39,18 +37,28 @@ export class PurchasersComp implements OnInit {
       }
     });
   }
+
+  // פונקציית המיון החדשה
+  sortGifts(criteria: string): void {
+    if (criteria === 'price') {
+      // מיון מהיקר לזול
+      this.gifts.sort((a, b) => b.price - a.price);
+    } else if (criteria === 'popularity') {
+      // מיון לפי כמות רוכשים (מהנרכש ביותר)
+      this.gifts.sort((a, b) => (b.purchasers?.length || 0) - (a.purchasers?.length || 0));
+    }
+  }
+
   loadInitialData(): void {
-    // 1. נטען קודם את הדו"ח הכללי (סך הכנסות)
     this.purchasersService.getReport().subscribe({
       next: (data: any) => {
         this.totalRevenue = data.PurchasersCount || 0;
       },
       error: (err) => console.error('Error fetching report', err)
     });
-    // 2. נטען את כל הרכישות כדי לקבל את רשימת המתנות והפרטים שלהן  
+
     this.purchasersService.getAll().subscribe({
       next: (data: PurchasersModel[]) => {
-        // ניקח רשימה ייחודית של מתנות מתוך הרכישות כדי ליצור כותרות
         const uniqueGifts = Array.from(new Set(data.map(p => p.giftId)));
         
         this.gifts = uniqueGifts.map(id => {
@@ -59,11 +67,10 @@ export class PurchasersComp implements OnInit {
             id: id,
             name: firstMatch?.giftName || 'מתנה ללא שם',
             price: firstMatch?.giftPrice || 0,
-            purchasers: [] // יתמלא מיד
+            purchasers: []
           };
         });
 
-        // 3. עבור כל מתנה, נמשוך את הרוכשים הספציפיים שלה מהשרת לפי ה-ID
         this.gifts.forEach(gift => {
           this.purchasersService.getByGift(gift.id).subscribe({
             next: (purchasers: any[]) => {
