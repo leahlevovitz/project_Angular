@@ -1,3 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
-@import "primeicons/primeicons.css";
-// @import 'primeng/dropdown';
+/* פלטת צבעים ורקע כללי */
+body {
+  background: radial-gradient(circle at top right, #1a2a6c, #1a2a6c, #000000); /* רקע עמוק ויוקרתי */
+  background-attachment: fixed;
+  font-family: 'Assistant', sans-serif;
+  color: #fff;
+  margin: 0;
+}
+
+/* שדרוג כרטיסי המתנות - אפקט זכוכית */
+.gift-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+  transition: all 0.3s ease-in-out !important;
+  overflow: hidden;
+}
+
+.gift-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  border-color: #ff0080 !important; /* גלו של ורוד ניאון ב-hover */
+}
+
+/* שדרוג כפתורים */
+.p-button-success {
+  background: linear-gradient(45deg, #00f2fe, #4facfe) !important; /* כחול חשמלי */
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: bold !important;
+  letter-spacing: 1px;
+}
+
+.p-button-warning {
+  background: linear-gradient(45deg, #f093fb, #f5576c) !important; /* ורוד-סגול שובב */
+  border: none !important;
+}
+
+/* שדרוג כותרות */
+h1, h2 {
+  background: linear-gradient(to left, #fff, #b8860b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900 !important;
+}

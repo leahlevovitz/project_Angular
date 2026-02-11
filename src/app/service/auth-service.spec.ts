@@ -1,16 +1,26 @@
-import { TestBed } from '@angular/core/testing';
+import { Injectable } from '@angular/core';
 
-import { AuthService } from './auth-service';
+@Injectable({ providedIn: 'root' })
+export class UserService {
+  private role: string | null = null;
 
-describe('AuthService', () => {
-  let service: AuthService;
+  constructor() {
+    // טוען role מ־localStorage אם קיים
+    const storedRole = localStorage.getItem('role');
+    this.role = storedRole ? storedRole : null;
+  }
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthService);
-  });
+  setRole(role: string) {
+    this.role = role;
+    localStorage.setItem('role', role);
+  }
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+  getRole(): string | null {
+    return this.role;
+  }
+
+  logout() {
+    this.role = null;
+    localStorage.removeItem('role');
+  }
+}

@@ -4,6 +4,5 @@ export class DonorModel {
     id!: number
     name!: string
     email!: string
-    GiftList?: GiftModel[] = [];
-
+    giftList?: any[];
 }

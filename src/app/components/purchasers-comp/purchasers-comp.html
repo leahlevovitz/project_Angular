@@ -1,0 +1,83 @@
+<div class="management-container" style="direction: rtl; padding: 25px; background-color: #f9fbff; min-height: 100vh;">
+  
+  <div class="main-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1 style="color: #1a2a6c; margin: 0; font-size: 2.2rem;">ניהול רוכשים לפי מתנה</h1>
+    <div class="revenue-card" style="background: linear-gradient(135deg, #11998e, #38ef7d); color: white; padding: 15px 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+      <span style="font-size: 1.1rem; opacity: 0.9;">סה"כ הכנסות:</span>
+      <div style="font-size: 1.8rem; font-weight: bold;">{{ report?.totalIncome | currency:'ILS':'symbol':'1.0-0' }}</div>
+    </div>
+  </div>
+
+  <div class="sorting-menu" style="margin-bottom: 30px; display: flex; gap: 15px; align-items: center;">
+    <span style="color: #4a5568; font-weight: bold;">מיין לפי:</span>
+    <button (click)="sortGifts('price')" style="padding: 8px 18px; border-radius: 10px; border: 1px solid #1a2a6c; background: white; color: #1a2a6c; cursor: pointer; transition: 0.3s;" onmouseover="this.style.background='#1a2a6c'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#1a2a6c'">
+      💰 המתנה היקרה ביותר
+    </button>
+    <button (click)="sortGifts('popularity')" style="padding: 8px 18px; border-radius: 10px; border: 1px solid #1a2a6c; background: white; color: #1a2a6c; cursor: pointer; transition: 0.3s;" onmouseover="this.style.background='#1a2a6c'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='#1a2a6c'">
+      🔥 הנרכשת ביותר
+    </button>
+  </div>
+
+  <div *ngFor="let gift of gifts" class="gift-wrapper" style="margin-bottom: 40px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #edf2f7;">
+    
+    <div class="gift-header" style="background: #f8fafc; padding: 20px 30px; border-bottom: 2px solid #edf2f7; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h2 style="margin: 0; color: #2d3748; display: flex; align-items: center;">
+          <span style="margin-left: 10px;">🎁</span> {{ gift.name }}
+        </h2>
+        <span style="color: #718096; font-size: 1rem;">מחיר להגרלה: <strong>{{ gift.price }} ₪</strong></span>
+      </div>
+      <div style="text-align: left;">
+        <span style="background: #ebf8ff; color: #3182ce; padding: 6px 16px; border-radius: 99px; font-weight: bold; font-size: 0.9rem;">
+          {{ gift.purchasers?.length || 0 }} כרטיסים נמכרו
+        </span>
+      </div>
+    </div>
+
+    <div style="padding: 0 20px 20px 20px; overflow-x: auto;">
+      <table style="width: 100%; border-collapse: separate; border-spacing: 0 10px; text-align: right;">
+        <thead>
+          <tr style="color: #a0aec0; text-transform: uppercase; font-size: 0.85rem;">
+            <th style="padding: 15px;">שם הרוכש</th>
+            <th style="padding: 15px;">טלפון</th>
+            <th style="padding: 15px;">אימייל</th>
+            <th style="padding: 15px;">כתובת</th>
+            <th style="padding: 15px;">תאריך רכישה</th>
+            <th style="padding: 15px;">מזהה</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of gift.purchasers" style="background: #fdfdfd; transition: transform 0.2s;">
+            <td style="padding: 15px; border-radius: 0 10px 10px 0; border: 1px solid #f1f5f9; border-left: none;">
+              <div style="display: flex; align-items: center;">
+                <div style="width: 35px; height: 35px; background: #e2e8f0; border-radius: 50%; margin-left: 12px; display: flex; align-items: center; justify-content: center; color: #4a5568; font-weight: bold;">
+                  {{ (p.userName || 'ר')[0] }}
+                </div>
+                <strong style="color: #2d3748;">{{ p.userName }}</strong>
+              </div>
+            </td>
+            <td style="padding: 15px; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; color: #4a5568;">
+              {{ p.userphone || p.userPhone || '---' }}
+            </td>
+            <td style="padding: 15px; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; color: #4a5568;">
+              {{ p.userEmail || p.useremail || '---' }}
+            </td>
+            <td style="padding: 15px; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; color: #4a5568;">
+              {{ p.userAdress || p.userAddress || '---' }}
+            </td>
+            <td style="padding: 15px; border-top: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; color: #718096; font-size: 0.9rem;">
+              {{ (p.purchaseDate || p.PurchaseDate) | date:'dd/MM/yyyy HH:mm' }}
+            </td>
+            <td style="padding: 15px; border-radius: 10px 0 0 10px; border: 1px solid #f1f5f9; border-right: none; color: #cbd5e0; font-size: 0.8rem;">
+              ID: {{ p.userId }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="!gift.purchasers || gift.purchasers.length === 0" style="padding: 40px; text-align: center; color: #a0aec0; border: 2px dashed #edf2f7; border-radius: 15px; margin-top: 10px;">
+        טרם נרכשו כרטיסים למתנה זו
+      </div>
+    </div>
+  </div>
+</div>

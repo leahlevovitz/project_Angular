@@ -1,0 +1,28 @@
+/* App-level layout helpers for premium theme */
+.app-root-container {
+	max-width: 1200px;
+	margin: 1.2rem auto;
+	padding: 1rem;
+}
+
+.page-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+
+.page-title { font-size: 1.25rem; font-weight: 800; color: #fff; }
+
+.surface-border { border-color: rgba(255,255,255,0.04) !important; }
+
+.shadow-2 { box-shadow: 0 12px 36px rgba(2,8,23,0.65) !important; }
+
+.border-round { border-radius: 12px !important; }
+
+.mb-4 { margin-bottom: 1rem !important; }
+.p-4 { padding: 1rem !important; }
+
+/* ensure prime components inherit font & color */
+.p-inputtext, .p-button, .p-dropdown, .p-menubar, .p-dialog { font-family: inherit; }

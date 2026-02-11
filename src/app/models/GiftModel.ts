@@ -5,8 +5,11 @@ export class GiftModel {
     price: number = 20
     category: string = "All_prizes"
     donorName!: string
-
-    image: string = "1";
+    isLocked: boolean = false
+    image: string = "1"
+    quantity: number = 1
+    winners?: string[]
+    PurchasersCount?: number 
 }
 
 

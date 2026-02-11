@@ -50,7 +50,8 @@ export class AddGift implements OnChanges   {
     donorId: new FormControl(0, [Validators.required]),
     price: new FormControl(0, [Validators.required, Validators.min(10), Validators.max(70)]),
     image: new FormControl(''),
-    category: new FormControl(this.categories[0].value, [Validators.required])
+    category: new FormControl(this.categories[0].value, [Validators.required]),
+    quantity: new FormControl(1, [Validators.required, Validators.min(1)])
   });
 
   ngOnChanges(changes: SimpleChanges) {
@@ -63,7 +64,8 @@ export class AddGift implements OnChanges   {
               donorId: gift.donorId,
               price: gift.price,
               image: gift.image,
-              category: gift.category || this.categories[0].value
+              category: gift.category || this.categories[0].value,
+              quantity: gift.quantity || 1
             });
           }
         },
@@ -75,7 +77,8 @@ export class AddGift implements OnChanges   {
         donorId: 0, 
         price: 0, 
         image: '', 
-        category: this.categories[0].value
+        category: this.categories[0].value,
+        quantity: 1
       });
     }
   }
@@ -90,7 +93,10 @@ export class AddGift implements OnChanges   {
       price: Number(this.formGift.value.price),
       image: this.formGift.value.image,
       category: this.formGift.value.category,
-      donorName: "" // השרת ימלא את השם
+      donorName: "" ,
+      isLocked: false,
+      quantity: Number(this.formGift.value.quantity) || 1
+
     };
 
     if (this.id !== -1) {

@@ -43,7 +43,7 @@ export class Login implements OnInit {
           console.log('User role detected:', role);
 
           // ניתוב לפי תפקיד המשתמש
-          if (role === 'admin') {
+          if (role === 'manager') {
             this.router.navigate(['/gifts']);
           } else {
             this.router.navigate(['/gifts']);
