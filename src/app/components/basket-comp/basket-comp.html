@@ -18,7 +18,7 @@
 
         <div class="gift-content">
           <div class="image-wrapper">
-            <img [src]="item.giftImage ? (item.giftImage + '.png') : 'assets/images/placeholder-gift.png'"
+            <img [src]="item.giftImage ? (item.giftImage + '.jpg') : 'assets/images/placeholder-gift.png'"
               [alt]="item.giftName || 'מתנה'" loading="lazy"
               (error)="$event.target.src='assets/images/placeholder-gift.png'" />
           </div>

@@ -52,7 +52,7 @@ export class AddGift implements OnChanges {
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
     donorId: new FormControl(0, [Validators.required]),
     price: new FormControl(0, [Validators.required, Validators.min(10), Validators.max(70)]),
-    image: new FormControl(''),
+    image: new FormControl('', Validators.required),
     category: new FormControl(this.categories[0].value, [Validators.required]),
     quantity: new FormControl(1, [Validators.required, Validators.min(1)])
   });
@@ -76,8 +76,8 @@ export class AddGift implements OnChanges {
     } else if (this.id === -1) {
       this.formGift.reset({
         name: '',
-        donorId: 0,
-        price: 0,
+        donorId: null,
+        price: null,
         image: '',
         category: this.categories[0].value,
         quantity: 1

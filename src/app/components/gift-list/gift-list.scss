@@ -1,48 +1,132 @@
+/* גריד כרטיסים */
 .gifts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  padding: 1rem 0;
 }
-ז
+.p-button{
+
+  background-color: #1a1f4b !important;
+}
+/* כרטיסים */
 .gift-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius: 16px;
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  box-shadow: 0 14px 40px rgba(2,8,23,0.55);
-  transition: transform 0.22s cubic-bezier(.2,.9,.3,1), box-shadow .22s ease;
-  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .gift-card:hover {
-  transform: translateY(-8px) scale(1.01);
+  
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.image-wrapper {
+/* קטגוריה */
+.gift-card .category-label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #6b21a8;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+/* תמונה */
+.gift-card img {
+  height: 260px;
   width: 100%;
-  height: 160px;
+  // object-fit: contain;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* תיאור */
+.gift-card .gift-info {
+  text-align: center;
+  padding: 0.5rem 1rem;
+}
+
+.gift-card .gift-info .gift-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4f46e5;
+  margin-bottom: 0.25rem;
+}
+
+.gift-card .gift-info .donor-name {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.gift-card .gift-info .gift-price {
+  color: #515488;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+// /* כפתורים מנהל */
+// .gift-card .manager-buttons {
+//   display: flex;
+//   justify-content: center;
+//   gap: 0.5rem;
+//   padding: 0.5rem 1rem;
+// }
+
+.gift-card .manager-buttons button {
+  background-color: #515488;
+  border-radius: 50px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* כפתורי לקוח */
+.gift-card .client-button {
+  width: 90%;
+  margin: 0.5rem auto 1rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+}
+
+/* חיפוש */
+.search-container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+  gap: 0.5rem;
+  margin-bottom: 2rem;
 }
 
-.image-wrapper img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
+.search-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
 }
 
-.gift-body { padding: 0.75rem 0.5rem; text-align: center; }
+/* כותרת עמוד */
+h2.text-primary {
+  font-size: 1.75rem;
+  color: #4f46e5;
+  font-weight: 700;
+}
 
-.gift-title { font-size: 1.02rem; font-weight: 800; margin-bottom: 0.35rem; color: #f8fbff; }
-.gift-price { font-size: 1.05rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 0.25rem; }
-.gift-donor { font-size: 0.88rem; color: var(--muted); }
+/* התאמה ל-navbar */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+}
 
-.gift-actions { display:flex; gap:0.5rem; justify-content:center; margin-top:0.65rem }
-
-@media (max-width: 640px) {
-  .image-wrapper { height: 120px; }
+/* מצב כרטיס נעול */
+.gift-card.locked {
+  opacity: 0.85;
 }

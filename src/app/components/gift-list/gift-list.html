@@ -4,15 +4,16 @@
 
   <!-- כותרת + כפתור הוספה -->
   @if(role === 'manager') {
-  <div class="flex justify-content-between align-items-center mb-4">
-    <h2 class="m-0 text-primary text-2xl font-bold">ניהול הגרלות ומתנות</h2>
-    <p-button label="הוספת מתנה" icon="pi pi-plus" severity="success" (onClick)="add()"></p-button>
-  </div>
+    <div class="flex justify-content-between align-items-center mb-4">
+      <h2 class="m-0 text-primary text-2xl font-bold">ניהול הגרלות ומתנות</h2>
+      <p-button label="הוספת מתנה" icon="pi pi-plus" severity="success"
+                [style]="{'background-color': '#1a1f4b', 'border-color': '#1a1f4b'}" (onClick)="add()"></p-button>
+    </div>
   }
 
   <!-- חיפוש -->
   <div class="search-container">
-    <button pButton label="חפש" icon="pi pi-search" class="search-button" (click)="search()"></button>
+    <button pButton label="חפש" icon="pi pi-search" class="search-button" (click)="search()" style="background-color: #1a1f4b;"></button>
     <span class="p-float-label">
       <input pInputText id="gName" [(ngModel)]="giftName" class="search-input" />
       <label for="gName">שם מתנה</label>
@@ -20,84 +21,69 @@
   </div>
 
   <!-- גריד מתנות -->
-  <div class="gifts-grid"
-    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+  <div class="gifts-grid">
     @for(t of list$ | async; track t.id) {
+      <p-card class="gift-card shadow-3 relative overflow-hidden">
+        <div class="category-label">{{ t.category }}</div>
+        <div class="text-center image-container">
+          <img [src]="t.image + '.jpg'" alt="gift" />
+        </div>
+        <div class="text-center gift-info">
+          <div class="gift-name truncate">{{ t.name }}</div>
+          <div class="donor-name mt-1">תורם: {{ t.donorName }}</div>
+          <div class="gift-price mt-1">₪ {{ t.price }}</div>
+        </div>
 
-    <p-card class="gift-card shadow-3 relative overflow-hidden" [style]="{'height':'480px'}">
+        <!-- כפתורי מנהל -->
+        @if(role === 'manager') {
+          <div class="manager-buttons">
+            <p-button label="🗑️" variant="text" severity="danger" (click)="deleteGift(t.id)" />
+            <p-button label="✏️" variant="text" severity="info" (click)="updateGift(t.id)" />
+          </div>
+        }
 
-      <!-- קטגוריה למעלה בצד -->
-      <div
-        class="absolute top-0 right-0 bg-purple-600 text-white text-xs font-bold px-3 py-1 border-bottom-left-radius-3">
-        {{ t.category }}
-      </div>
+        <!-- כפתורי לקוח -->
+        @if(!t.isLocked && role === 'client') {
+          <button pButton label="הוסף לסל" icon="pi pi-shopping-cart" class="client-button" style="background-color: #515488;"
+                  (click)="addGiftToBasket(t)"></button>
+        }
 
-      <!-- תמונה גדולה -->
-      <div class="text-center mt-5 mb-3">
-        <img [src]="t.image + '.png'" alt="gift"
-          style="height: 200px; width: auto; object-fit: contain; border-radius: 0.5rem;" />
-      </div>
-
-      <!-- שם בולט -->
-      <div class="text-center mb-2">
-        <div class="text-xl md:text-2xl font-extrabold text-indigo-700 truncate">{{ t.name }}</div>
-        <div class="text-600 mt-1">תורם: {{ t.donorName }}</div>
-        <div class="text-green-600 font-bold mt-1 text-lg">₪ {{ t.price }}</div>
-      </div>
-
-      <!-- כפתורי מנהל -->
-      @if(role === 'manager') {
-      <div class="flex justify-content-center gap-3 mb-2">
-        <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-info" (click)="updateGift(t.id)"></button>
-        <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteGift(t.id)"></button>
-        <button pButton label="הגרל" icon="pi pi-star" class="p-button-warning flex-grow-1"
-          [disabled]="t.isLocked || loadingLottery" (click)="drawLottery(t.id)"></button>
-      </div>
-      }
-
-      <!-- כפתורי לקוח -->
-      @if(!t.isLocked && role === 'client') {
-      <button pButton label="הוסף לסל" icon="pi pi-shopping-cart" class="w-full p-button-success"
-        (click)="addGiftToBasket(t)"></button>
-      } @else {
-      <button pButton label="צפה בזוכים" icon="pi pi-users" class="w-full p-button-outlined p-button-info"
-        (click)="showWinnersInDialog(t.id, t.name)"></button>
-       
-      }
-
-      @if(t.isLocked) {
-      
-      }
-
-    </p-card>
-
+        @if(!t.isLocked && role === 'manager') {
+          <button pButton label="הגרל" icon="pi pi-star" class="client-button" style="background-color: rgb(77, 162, 201);"
+                  (click)="drawLottery(t.id)"></button>
+        } @else if(t.isLocked) {
+          <button pButton label="צפה בזוכים" icon="pi pi-users" class="client-button" style="background-color: #515488;"
+                  (click)="showWinnersInDialog(t.id, t.name)"></button>
+          <p class="text-center mt-2 text-danger">מתנה זו הוגרלה</p>
+        }
+      </p-card>
     }
   </div>
-
 </div>
 
 <!-- דיאלוג זוכים -->
 <p-dialog header="זוכים במתנה: {{ currentGiftName }}" [(visible)]="displayWinnersDialog" [modal]="true"
-  [draggable]="false" [resizable]="false" [style]="{width:'380px'}">
+          [draggable]="false" [resizable]="false" [style]="{width:'380px'}">
   <div class="p-2">
     @if(currentWinners && currentWinners.length > 0) {
-    <ul class="list-none p-0 m-0">
-      @for(winner of currentWinners; track winner) {
-      <li class="p-3 border-bottom-1 surface-border flex align-items-center">
-        <i class="pi pi-user mr-2 text-primary"></i>
-        <span class="font-medium">{{ winner }}</span>
-      </li>
-      }
-    </ul>
+      <ul class="list-none p-0 m-0">
+        @for(winner of currentWinners; track winner) {
+          <li class="p-3 border-bottom-1 surface-border flex align-items-center">
+            <i class="pi pi-user mr-2 text-primary"></i>
+            <span class="font-medium">{{ winner }}</span>
+          </li>
+        }
+      </ul>
     } @else {
-    <div class="text-center p-4 text-600 italic">טרם נקבעו זוכים או חלה שגיאה בטעינה.</div>
+      <div class="text-center p-4 text-600 italic">טרם נקבעו זוכים או חלה שגיאה בטעינה.</div>
     }
   </div>
 </p-dialog>
 
 @if(isEditMode) {
-<app-add-gift [id]="selectedId" (closeEdit)="handleClose($event)"></app-add-gift>
+  <app-add-gift [id]="selectedId" (closeEdit)="handleClose($event)"></app-add-gift>
 }
+
 @if(role === 'client') {
-<app-basket-comp #basketComp [userId]="userId"></app-basket-comp>
+  <app-basket-comp #basketComp [userId]="userId"></app-basket-comp>
 }

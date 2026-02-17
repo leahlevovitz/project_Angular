@@ -135,8 +135,9 @@ export class GiftList implements OnInit {
     }
 
     // אישור מחיקה מהמשתמש
-    if (confirm(`האם אתה בטוח שברצונך למחוק את ${gift.name}?`)) {
-      this.giftSrv.delete(gift.id).subscribe({
+    if (confirm(`האם אתה בטוח שברצונך למחוק את ${gift}?`)) {
+
+      this.giftSrv.delete(gift).subscribe({
         next: () => {
           this.refreshList();
         },
