@@ -1,38 +1,43 @@
-<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-  <p-card header="כניסה למערכת" [style]="{ width: '360px' }">
-    <div class="flex flex-column gap-3">
-      
-      <div class="flex flex-column gap-2">
-        <label for="userName">שם משתמש</label>
-        <input 
-          pInputText 
-          id="userName" 
-          formControlName="userName" />
-        <small *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched" class="p-error">
-          שדה זה הוא חובה
-        </small>
-      </div>
-
-      <div class="flex flex-column gap-2">
-        <label for="PasswordHash">סיסמה</label>
-        <input 
-          pInputText 
-          id="Password" 
-          type="password" 
-          formControlName="Password" />
-        <small *ngIf="loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched" class="p-error">
-          הסיסמה חייבת להכיל לפחות 6 תווים
-        </small>
-      </div>
-
-      <p-button 
-        label="התחבר" 
-        icon="pi pi-user" 
-        type="submit"
-        [disabled]="loginForm.invalid" 
-        [style]="{ width: '100%' }">
-      </p-button>
-      
+<p-toast></p-toast>
+<div class="login-page">
+  <div class="login-card fade-in">
+    <div class="login-header">
+      <i class="pi pi-shield login-icon"></i>
+      <h2>התחברות</h2>
+      <span>שמחים לראות אותך שוב</span>
     </div>
-  </p-card>
-</form>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form">
+      <div class="field">
+        <span class="p-float-label">
+          <input pInputText id="userName" formControlName="userName" class="w-full"
+            [class.invalid]="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched" />
+          <label for="userName">שם משתמש</label>
+        </span>
+        <small *ngIf="loginForm.get('userName')?.invalid && loginForm.get('userName')?.touched" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i>
+          חובה להזין שם משתמש
+        </small>
+      </div>
+      <div class="field">
+        <span class="p-float-label">
+          <p-password inputId="Password" formControlName="Password" [toggleMask]="true" [feedback]="false"
+            styleClass="w-full" [inputStyleClass]="
+              loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched
+              ? 'invalid'
+              : ''
+            ">
+          </p-password>
+          <label for="Password">סיסמה</label>
+        </span>
+        <small *ngIf="loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i>
+          לפחות 6 תווים
+        </small>
+      </div>
+      <p-button label="התחבר" icon="pi pi-sign-in" type="submit" styleClass="main-btn w-full"
+        [disabled]="loginForm.invalid">
+      </p-button>
+      <button (click)="goToRegister()" class="register-link">עדיין אין חשבון? הרשמה</button>
+    </form>
+  </div>
+</div>

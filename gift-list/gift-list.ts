@@ -14,6 +14,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { LotteryService } from '../../service/lottery-service';
 import { tap } from 'rxjs';
 import { LotteryModel } from '../../models/LotteryModel';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-gift-list',
@@ -24,21 +27,23 @@ import { LotteryModel } from '../../models/LotteryModel';
     CardModule,
     ButtonModule,
     DialogModule,
-    BasketComp,
     FormsModule,
-    InputTextModule
+    InputTextModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './gift-list.html',
   styleUrl: './gift-list.scss',
 })
 export class GiftList implements OnInit {
   @ViewChild('basketComp') basketChild!: BasketComp;
+  showBasketDialog = false;
 
   private userService = inject(UserService);
   private addToBasketSrv = inject(PurchasersService);
   private lotteryService = inject(LotteryService);
   giftSrv: GiftService = inject(GiftService);
-
+private messageService = inject(MessageService);
   selectedId: number = -1;
   isEditMode: boolean = false;
   role = this.userService.getRole();
@@ -130,13 +135,14 @@ export class GiftList implements OnInit {
 
     // בדיקה אם המתנה נעולה (אופציונלי, לפי הלוגיקה שלך)
     if (gift.isLocked) {
-      alert('מתנה זו נעולה ולא ניתן למחוק אותה.');
+      alert('מתנה זו הוגרלה ולא ניתן למחוק אותה.');
       return;
     }
 
     // אישור מחיקה מהמשתמש
-    if (confirm(`האם אתה בטוח שברצונך למחוק את ${gift.name}?`)) {
-      this.giftSrv.delete(gift.id).subscribe({
+    if (confirm(`האם אתה בטוח שברצונך למחוק את ${gift}?`)) {
+
+      this.giftSrv.delete(gift).subscribe({
         next: () => {
           this.refreshList();
         },
@@ -147,11 +153,30 @@ export class GiftList implements OnInit {
       });
     }
   }
-  addGiftToBasket(gift: GiftModel) {
+addGiftToBasket(gift: GiftModel) {
     if (!this.userId) return;
     const p = { id: 0, userId: this.userId, giftId: gift.id, giftImage: gift.image, giftName: gift.name, giftPrice: gift.price };
-    this.addToBasketSrv.addToBasket(p).subscribe(() => {
-      if (this.basketChild) this.basketChild.refreshBasket();
+    
+    this.addToBasketSrv.addToBasket(p).subscribe({
+      next: () => {
+        // 5. הודעה מגניבה בהצלחה
+        this.messageService.add({ 
+          severity: 'success', 
+          summary: 'איזה כיף!', 
+          detail: `המתנה "${gift.name}" נוספה לסל שלך `,
+          life: 2500 
+        });
+
+        if (this.basketChild) this.basketChild.refreshBasket();
+      },
+      error: () => {
+        // הודעת שגיאה במקרה הצורך
+        this.messageService.add({ 
+          severity: 'error', 
+          summary: 'אופס...', 
+          detail: 'לא הצלחנו להוסיף את המוצר, נסה שוב.' 
+        });
+      }
     });
   }
 }

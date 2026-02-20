@@ -1,20 +1,61 @@
-.navbar-container {
-  background: linear-gradient(135deg, #1c2331, #0f141c);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-}
+// /* Navbar */
+// .navbar {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   background: linear-gradient(90deg, #1a1a1a, #2b1a47); /* שחור מט + סגול כהה */
+//   padding: 12px 40px;
+//   border-radius: 14px;
+//   box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+//   font-family: "Inter", sans-serif;
+//   color: #f5f5f5;
+//   transition: background 0.3s ease;
+// }
 
-.main-title {
-  font-size: 1.1rem;
-  background: linear-gradient(90deg, #ffd200, #ff512f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+// .navbar:hover {
+//   background: linear-gradient(90deg, #2b1a47, #4f46e5); /* סגול מתעורר */
+// }
 
-.custom-menu .p-menuitem-link {
-  border-radius: 12px;
-  transition: 0.3s;
-}
+// .nav-section {
+//   display: flex;
+//   align-items: center;
+//   gap: 20px;
+// }
 
-.custom-menu .p-menuitem-link:hover {
-  background: rgba(255,255,255,0.08) !important;
-}
+// .nav-left { flex: 1; }
+// .nav-center { flex: 0 0 auto; display: flex; align-items: center; gap: 15px; }
+// .nav-right { flex: 1; justify-content: flex-end; display: flex; }
+
+// /* לוגו */
+// .logo-img {
+//   height: 50px;
+//   width: auto;
+//   object-fit: contain;
+// }
+
+// .brand-text { display: flex; flex-direction: column; }
+// .main-title { font-weight: 800; font-size: 1.5rem; color: #e9e8e1; } /* זהב יוקרתי */
+// .sub-title { font-size: 0.9rem; color: #7c4dff; } /* סגול מהכרטיס */
+
+// .nav-btn {
+//   background: linear-gradient(135deg, #7c4dff, #4f46e5); /* כמו הכפתורים בכרטיס */
+//   border: none;
+//   padding: 8px 20px;
+//   border-radius: 10px;
+//   color: #f5f5f5;
+//   font-weight: 600;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+//   box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+// }
+
+// .nav-btn:hover {
+//   background: linear-gradient(135deg, #4f46e5, #9b5de5); /* סגול-כחול יוקרתי */
+//   transform: translateY(-2px) scale(1.07);
+//   box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+// }
+
+// .nav-btn:active {
+//   transform: translateY(1px) scale(0.98);
+//   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+// }

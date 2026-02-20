@@ -8,6 +8,7 @@ import { DialogModule } from 'primeng/dialog';
 import { map } from 'rxjs/operators';
 import { MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @Component({
   selector: 'app-basket-comp',
@@ -19,7 +20,8 @@ import { Observable } from 'rxjs';
     CardModule,
     ButtonModule,
     ToastModule,
-    DialogModule
+    DialogModule,
+    InputMaskModule
   ],
   providers: [MessageService]
 })

@@ -1,51 +1,127 @@
-<div
-    style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f8f9fa; direction: rtl;">
+<p-toast></p-toast>
 
-    <div
-        style="background: white; width: 90%; max-width: 450px; padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-top: 6px solid #b8860b;">
+<div class="register-page">
+  <div class="register-card fade-in">
 
-        <div style="text-align: center; margin-bottom: 30px;">
-            <h2 style="color: #1a2a6c; margin: 0; font-size: 26px; font-weight: bold;">הרשמה למכירה הסינית</h2>
-            <div style="width: 40px; height: 3px; background: #b8860b; margin: 10px auto;"></div>
+    <div class="register-header">
+      <i class="pi pi-user-plus register-icon"></i>
+      <h2>הרשמה למכירה הסינית</h2>
+      <div class="underline"></div>
+      <span>צעד קטן לפתיחת עולם חדש של הזדמנויות</span>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+
+      <div class="field">
+        <span class="p-float-label">
+          <input
+            pInputText
+            formControlName="FullName"
+            [class.invalid]="registerForm.get('FullName')?.invalid && registerForm.get('FullName')?.touched"/>
+          <label>שם מלא</label>
+        </span>
+        <small *ngIf="registerForm.get('FullName')?.touched && registerForm.get('FullName')?.invalid" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i>
+          חובה להזין שם מלא
+        </small>
+      </div>
+
+      <div class="field">
+        <span class="p-float-label">
+          <input
+            pInputText
+            formControlName="userName"
+            [class.invalid]="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched"/>
+          <label>שם משתמש</label>
+        </span>
+        <small *ngIf="registerForm.get('userName')?.touched && registerForm.get('userName')?.invalid" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i>
+          חובה להזין שם משתמש
+        </small>
+      </div>
+
+      <div class="field">
+        <span class="p-float-label">
+          <input
+            pInputText
+            type="email"
+            formControlName="Email"
+            [class.invalid]="registerForm.get('Email')?.invalid && registerForm.get('Email')?.touched"/>
+          <label>אימייל</label>
+        </span>
+        <small *ngIf="registerForm.get('Email')?.touched && registerForm.get('Email')?.errors?.['required']" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i> נא למלא אימייל
+        </small>
+        <small *ngIf="registerForm.get('Email')?.touched && registerForm.get('Email')?.errors?.['pattern']" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i> נא למלא אימייל חוקי
+        </small>
+      </div>
+
+      <div class="field">
+        <span class="p-float-label">
+          <p-password
+            formControlName="PasswordHash"
+            [toggleMask]="true"
+            [feedback]="false"
+            [inputStyleClass]="registerForm.get('PasswordHash')?.invalid && registerForm.get('PasswordHash')?.touched ? 'invalid' : ''">
+          </p-password>
+          <label>סיסמה</label>
+        </span>
+        <small *ngIf="registerForm.get('PasswordHash')?.touched && registerForm.get('PasswordHash')?.errors?.['required']" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i> חובה להזין סיסמה
+        </small>
+        <small *ngIf="registerForm.get('PasswordHash')?.touched && registerForm.get('PasswordHash')?.errors?.['minlength']" class="error-msg">
+          <i class="pi pi-exclamation-circle"></i> הסיסמה חייבת להכיל לפחות 6 תווים
+        </small>
+      </div>
+
+      <div class="input-row">
+        <div class="field">
+          <span class="p-float-label">
+            <input
+              pInputText
+              formControlName="phone"
+              [class.invalid]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"/>
+            <label>טלפון</label>
+          </span>
+          <small *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['required']" class="error-msg">
+            <i class="pi pi-exclamation-circle"></i> חובה להזין טלפון
+          </small>
+          <small *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['pattern']" class="error-msg">
+            <i class="pi pi-exclamation-circle"></i> נא למלא מספר טלפון חוקי (9-10 ספרות)
+          </small>
         </div>
 
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">שם</label>
-                <input type="text" pInputText formControlName="FullName" placeholder="הכנס שם מלא">
-            </div>
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">שם משתמש</label>
-                <input type="text" pInputText formControlName="userName" placeholder="הכנס שם משתמש">
-            </div>
+        <div class="field">
+          <span class="p-float-label">
+            <input
+              pInputText
+              formControlName="adress"
+              [class.invalid]="registerForm.get('adress')?.invalid && registerForm.get('adress')?.touched"/>
+            <label>כתובת</label>
+          </span>
+          <small *ngIf="registerForm.get('adress')?.touched && registerForm.get('adress')?.errors?.['required']" class="error-msg">
+            <i class="pi pi-exclamation-circle"></i> חובה להזין כתובת
+          </small>
+          <small *ngIf="registerForm.get('adress')?.touched && registerForm.get('adress')?.errors?.['pattern']" class="error-msg">
+            <i class="pi pi-exclamation-circle"></i> כתובת יכולה להכיל רק אותיות ורווחים
+          </small>
+        </div>
+      </div>
 
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">אימייל</label>
-                <input type="email" pInputText formControlName="Email" placeholder="example@mail.com">
-            </div>
+      <p-button
+        label="להרשמה והשתתפות"
+        icon="pi pi-check"
+        type="submit"
+        styleClass="main-btn w-full"
+        [disabled]="registerForm.invalid">
+      </p-button>
 
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">סיסמה</label>
-                <p-password formControlName="PasswordHash" [feedback]="false" [toggleMask]="true"
-                    placeholder="••••"></p-password>
-            </div>
+      <button type="button" class="login-link" (click)="router.navigate(['/login'])">
+        כבר יש לך חשבון? כניסה
+      </button>
 
-            <div class="input-row" style="margin-bottom: 25px;">
-                <div>
-                    <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">טלפון</label>
-                    <input type="text" pInputText formControlName="phone" placeholder="050-0000000">
-                </div>
-                <div>
-                    <label style="display: block; font-weight: bold; margin-bottom: 8px; color: #444;">כתובת</label>
-                    <input type="text" pInputText formControlName="adress" placeholder="עיר ורחוב">
-                </div>
-            </div>
+    </form>
 
-            <button type="submit" [disabled]="registerForm.invalid"
-                style="width: 100%; background: #b8860b; color: white; border: none; padding: 16px; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(184,134,11,0.2);">
-                להרשמה והשתתפות
-            </button>
-
-        </form>
-    </div>
+  </div>
 </div>

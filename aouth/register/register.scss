@@ -1,29 +1,105 @@
-/* תיקון קריטי לשדה הסיסמה של PrimeNG */
-:host ::ng-deep .p-password, 
-:host ::ng-deep .p-password input {
-    width: 100% !important;
+
+
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at 20% 20%, #e0f7fa, transparent 40%),
+    radial-gradient(circle at 80% 80%, #f3e5f5, transparent 40%),
+    #f8fafc;
+  font-family: "Inter", sans-serif;
+  padding: 2rem; /* רווח מסביב למניעת חיתוך במסכים קטנים */
+  box-sizing: border-box;
 }
 
-/* מוודא שהאייקון של ה-Eye לא שובר את הלייאוט */
-:host ::ng-deep .p-password-toggle-mask {
-    left: 10px; /* מעביר את העין לצד שמאל בגלל ה-RTL */
-    right: auto !important;
+.register-card {
+  width: 450px;
+  max-height: 97vh; /* לא יותר מ-90% מגובה המסך */
+  overflow-y: auto; /* גלילה פנימית אם צריך */
+  padding: 1.5rem;
+  border-radius: 24px;
+  background: white;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08), 0 10px 25px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: 0.3s;
+    max-width: 90%;
+}
+label{
+    font-size: small;
+}
+.register-card::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* יישור מושלם לשדות הקלט */
-input {
-    width: 100% !important;
-    text-align: right;
-    padding: 12px !important;
+.register-card::-webkit-scrollbar-thumb {
+  background-color: rgba(124,77,255,0.5);
+  border-radius: 3px;
 }
 
-/* מניעת דחיסה של שדות ב-Row */
-.input-row {
-    display: flex;
-    gap: 15px;
-    width: 100%;
+.register-card:hover { transform: translateY(-6px); }
+h2{
+    font-size: 21px;
 }
 
-.input-row > div {
-    flex: 1;
+.register-header { 
+    text-align: center;
+    size: 80%;
 }
+.register-icon { font-size: 38px; color: #7c4dff; margin-bottom: 8px; }
+.register-header h2 { margin: 0; font-weight: 600; color: #1e293b; }
+.register-header .underline {
+  width: 30px; height: 2px; background: #7c4dff; margin: 7px auto;
+  border-radius: 3px;
+}
+.register-header span { font-size: 9px; color: #64748b; }
+
+.register-form { display: flex; flex-direction: column;align-items: center; }
+
+.p-inputtext, .p-password-input {
+  border-radius: 14px !important;
+  padding: 0.566rem 0.3rem !important;
+  border: 1px solid #e2e8f0 !important;
+  transition: 0.2s;
+}
+
+.p-inputtext:focus, .p-password-input:focus {
+  border-color: #7c4dff !important;
+  box-shadow: 0 0 0 3px rgba(124,77,255,0.15) !important;
+}
+
+.invalid { border-color: #ef4444 !important; }
+
+.error-msg {
+  color: #ef4444; font-size: 6px; margin-top: 2px;
+  display: flex; align-items: center; gap: 6px;
+  animation: shake 0.25s ease;
+}
+
+.main-btn {
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #7c4dff, #4f46e5) !important;
+  border: none !important;
+  font-weight: 400; padding: 0.6rem !important;
+  transition: 0.25s;
+}
+.main-btn:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(124,77,255,0.3); }
+
+.login-link {
+  margin-top: 6px; background: none; border: none;
+  color: #7c4dff; cursor: pointer; font-size: 13px;
+  transition: 0.2s;
+  padding: 0.05rem;
+}
+.login-link:hover { text-decoration: underline; }
+
+.input-row { display: flex;    gap: -0.5rem;
+    flex-direction: column; }
+
+// .fade-in { animation: fadeIn 0.6s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes shake { 0%{transform:translateX(0);}25%{transform:translateX(-3px);}50%{transform:translateX(3px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);} }
