@@ -1,3 +1,27 @@
+
+::ng-deep .p-toast .p-toast-message , .p-toast-detail {
+    background: #eef0ff87; /* הכחול הכהה שלך */
+    color: rgb(4, 22, 93);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+    .p-toast-message-icon, .p-toast-icon-close {
+        color: #c9cad0; /* כחול בהיר יותר */
+    }
+    
+    .p-toast-summary {
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+}
+
+/* עיצוב רספונסיבי למובייל */
+// @media screen and (max-width: 450px) {
+//     ::ng-deep .basket-side-dialog {
+//         width: 100% !important;
+//     }
+// }
 /* גריד כרטיסים */
 .gifts-grid {
   display: grid;

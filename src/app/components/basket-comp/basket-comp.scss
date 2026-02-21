@@ -1,173 +1,210 @@
-/* ===== Container ===== */
+
+
+/* שימוש ב-host מבטיח שזה יפעל רק בקומפוננטה הזו */
+:host ::v-deep {
+  
+  /* עיצוב הדיאלוג הספציפי */
+  .custom-payment-dialog {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+
+    .p-dialog-header {
+      background-color: #fcfcfc;
+      padding: 1.5rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .payment-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      padding: 1rem 0;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+
+      label {
+        font-weight: 700;
+        font-size: 0.85rem;
+        color: #555;
+      }
+
+      /* עיצוב האינפוטים של PrimeNG בתוך הדיאלוג */
+      input.p-inputtext {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background: #fafafa;
+
+        &:focus {
+          border-color: #4a90e2;
+          box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+      }
+    }
+
+    .row-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* עיצוב כפתורים בתחתית */
+    .p-dialog-footer {
+      border-top: 1px solid #eee;
+      padding: 1rem;
+      
+      .dialog-actions {
+        display: flex;
+        gap: 0.5rem;
+        
+        button {
+          flex: 1;
+        }
+      }
+    }
+  }
+}/* קונטיינר ראשי */
+
+
 .basket-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
+    direction: rtl;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .basket-title {
-  text-align: right;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 30px;
-  color: #222;
+    font-size: 1.8rem;
+    color: #2d3436;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 10px;
 }
 
-/* ===== Empty + Loading ===== */
-.empty-msg,
-.loading-msg {
-  text-align: center;
-  font-size: 1.1rem;
-  color: #888;
-  padding: 40px 0;
+/* עיצוב הכרטיס של כל מוצר */
+::ng-deep .gift-card {
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 1rem;
 }
 
-/* ===== Basket Layout (Vertical Cart Style) ===== */
-.basket-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* ===== Product Row Card ===== */
-.gift-card {
-  border-radius: 14px !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  border: 1px solid #eee;
-}
-
-/* ===== Header ===== */
-.card-header {
-  font-size: 1.2rem;
-  font-weight: 600;
-  padding: 15px 20px 0 20px;
-  text-align: right;
-}
-
-.quantity-badge {
-  background: #f1f1f1;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  margin-right: 10px;
-}
-
-/* ===== Main Content Row ===== */
 .gift-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px 20px 20px;
-  gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 0;
 }
 
-/* ===== Image ===== */
-.image-wrapper {
-  width: 110px;
-  height: 110px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #f9f9f9;
-  flex-shrink: 0;
-  border: 1px solid #eee;
-}
-
+/* תמונה */
 .image-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    background-color: #f9f9f9;
+    border-radius: 8px;
 }
 
-/* ===== Details ===== */
+/* פרטי מוצר */
 .gift-details {
-  flex: 1;
-  text-align: right;
-}
-
-.gift-price {
-  margin: 0;
-  font-size: 1rem;
-  color: #666;
-}
-
-.total-item-price {
-  margin-top: 6px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #000;
-}
-
-/* ===== Remove Button Footer ===== */
-.p-card-footer {
-  padding: 0 20px 20px 20px !important;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.p-button-danger {
-  font-size: 0.9rem;
-}
-
-/* ===== Checkout Section ===== */
-.checkout-button {
-  margin-top: 30px;
-  width: 100%;
-  height: 55px;
-  font-size: 1.1rem;
-  border-radius: 10px !important;
-}
-
-/* ===== Payment Dialog Styling ===== */
-.custom-payment-dialog .p-dialog {
-  border-radius: 16px;
-}
-
-.payment-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 10px 5px;
-}
-
-.field-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.field-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.row-fields {
-  display: flex;
-  gap: 15px;
-}
-
-.row-fields .field-group {
-  flex: 1;
-}
-
-.dialog-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .gift-content {
+    flex-grow: 1;
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .image-wrapper {
-    width: 100%;
-    height: 180px;
-  }
-
-  .p-card-footer {
     justify-content: center;
-  }
+}
+
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.gift-name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3436;
+}
+
+.unit-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2d3436;
+}
+
+/* שורה תחתונה: כמות ומחיר סופי */
+.bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* בקרת כמות בסגנון התמונה */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 2px 8px;
+}
+
+.quantity-number {
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.total-price {
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+/* כפתור מחיקה (סל מיחזור ורוד כמו בצילום) */
+.remove-wrapper ::ng-deep .p-button.p-button-danger.p-button-text {
+    color: #ff7675;
+    background-color: #ffeaa72b; /* גוון בהיר מאוד */
+}
+
+.remove-wrapper ::ng-deep .p-button.p-button-danger.p-button-text:hover {
+    background-color: #fab1a0;
+    color: white;
+}
+
+/* כפתור רכישה */
+.checkout-wrapper {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.checkout-button {
+    padding: 1rem 3rem !important;
+    font-size: 1.2rem !important;
+    border-radius: 30px !important;
+    font-weight: bold !important;
+    background-color: #27ae60 !important;
+    border: none !important;
+}
+
+/* התאמה למובייל */
+@media (max-width: 768px) {
+    .gift-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .top-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
 }

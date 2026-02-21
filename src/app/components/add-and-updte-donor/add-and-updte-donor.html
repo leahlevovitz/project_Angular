@@ -1,37 +1,40 @@
-<p-dialog   [(visible)]="visible"
-        [modal]="true"
-          [closable]="false"
-          [style]="{ width: '420px' }"
-          [header]="id === -1 ? 'הוספת תורם' : 'עריכת תורם'">
+<p-dialog 
+    [(visible)]="visible" 
+    [modal]="true" 
+    [closable]="false" 
+    [style]="{ width: '450px' }" 
+    [header]="id === -1 ? 'הוספת תורם' : 'עריכת תורם'"
+    class="donor-dialog">
 
-  <form [formGroup]="formDonor" (ngSubmit)="saveDonor()" class="donor-form">
+  <form [formGroup]="formDonor" (ngSubmit)="saveDonor()" class="p-fluid">
 
-    <!-- שדה שם -->
-    <div class="field">
-      <label for="name">שם</label>
-      <input pInputText id="name" type="text" formControlName="name" placeholder="הכנס שם מלא" />
-      <small class="error" *ngIf="formDonor.get('name')?.invalid && formDonor.get('name')?.touched">
-        שם חובה (לפחות 5 תווים)
+    <div class="field mb-4">
+      <label for="name" class="block font-semibold mb-2">
+        שם <span class="text-red-500">*</span>
+      </label>
+      <input pInputText id="name" type="text" formControlName="name" placeholder="הכנס שם מלא" 
+             [ngClass]="{'ng-invalid ng-dirty': formDonor.get('name')?.invalid && formDonor.get('name')?.touched}"/>
+      <small class="p-error block mt-1" *ngIf="formDonor.get('name')?.invalid && formDonor.get('name')?.touched">
+        שם הוא שדה חובה (לפחות 5 תווים)
       </small>
     </div>
 
-    <!-- שדה אימייל -->
-    <div class="field">
-      <label for="email">אימייל</label>
-      <input pInputText id="email" type="email" formControlName="email" placeholder="example@email.com" />
-      <small class="error" *ngIf="formDonor.get('email')?.invalid && formDonor.get('email')?.touched">
-        אימייל לא תקין
+    <div class="field mb-4">
+      <label for="email" class="block font-semibold mb-2">
+        אימייל <span class="text-red-500">*</span>
+      </label>
+      <input pInputText id="email" type="email" formControlName="email" placeholder="example@email.com" 
+             [ngClass]="{'ng-invalid ng-dirty': formDonor.get('email')?.invalid && formDonor.get('email')?.touched}"/>
+      <small class="p-error block mt-1" *ngIf="formDonor.get('email')?.invalid && formDonor.get('email')?.touched">
+        יש להזין אימייל תקין
       </small>
     </div>
 
-    <!-- כפתורים -->
-    <div class="actions">
-      <button pButton type="submit" [disabled]="formDonor.invalid">
-        {{ id === -1 ? 'הוסף' : 'עדכן' }}
-      </button>
-      <button pButton type="button" class="p-button-text" (click)="finish(false)">
-        ביטול
-      </button>
+    <hr class="mb-4 border-gray-200">
+
+    <div class="flex justify-content-end gap-2">
+      <button pButton type="button" label="ביטול" class="p-button-text p-button-secondary" (click)="finish(false)"></button>
+      <button pButton type="submit" [label]="id === -1 ? 'הוסף' : 'עדכן'" [disabled]="formDonor.invalid" class="p-button-raised p-button-primary"></button>
     </div>
 
   </form>

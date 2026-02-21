@@ -197,7 +197,7 @@ export class AdminNavbar implements OnInit, OnDestroy {
     } else if (role === 'client') {
       this.leftMenu = [
         { label: 'מתנות', link: '/gifts' },
-        { label: 'סל קניות', link: '/cart' }
+        { label: 'הכרטיסים שנבחרו ', link: '/cart' }
       ];
     }
 

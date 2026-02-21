@@ -1,5 +1,4 @@
 <div class="basket-container">
-  <h2 class="basket-title">סל קניות שלי</h2>
 
   <ng-container *ngIf="(list$ | async) as items; else loading">
 
@@ -8,37 +7,76 @@
     </div>
 
     <div class="basket-list" *ngIf="items.length > 0">
+
+      <!-- רשימת מוצרים -->
       <p-card *ngFor="let item of items" styleClass="gift-card">
-        <ng-template pTemplate="header">
-          <div class="card-header">
-            {{ item.giftName || 'מתנה' }}
-            <span *ngIf="item.quantity > 1" class="quantity-badge">x{{ item.quantity }}</span>
-          </div>
-        </ng-template>
 
         <div class="gift-content">
+
+          <!-- תמונה -->
           <div class="image-wrapper">
-            <img [src]="item.giftImage ? (item.giftImage + '.jpg') : 'assets/images/placeholder-gift.png'"
-              [alt]="item.giftName || 'מתנה'" loading="lazy"
+            <img
+              [src]="item.giftImage ? (item.giftImage + '.jpg') : 'assets/images/placeholder-gift.png'"
+              [alt]="item.giftName || 'מתנה'"
+              loading="lazy"
               (error)="$event.target.src='assets/images/placeholder-gift.png'" />
           </div>
 
+          <!-- פרטי מוצר -->
           <div class="gift-details">
-            <p class="gift-price">מחיר ליחידה: ₪{{ item.giftPrice }}</p>
-            <p *ngIf="item.quantity > 1" class="total-item-price">
-              <strong>סה"כ: ₪{{ item.giftPrice * item.quantity }}</strong>
-            </p>
+
+            <!-- שורה עליונה -->
+            <div class="top-row">
+              <h3 class="gift-name">{{ item.giftName || 'מתנה' }}</h3>
+              <span class="unit-price">₪{{ item.giftPrice }}</span>
+            </div>
+
+            <!-- שורה תחתונה -->
+            <div class="bottom-row">
+
+              <!-- שליטת כמות (UI בלבד, בלי לוגיקה חדשה)
+              <div class="quantity-control">
+                <button pButton type="button" 
+                  class="p-button-rounded p-button-text">➖</button> -->
+
+                <span class="quantity-number">
+                 כמות מוצרים: {{ item.quantity }}
+                </span>
+
+                <!-- <button pButton type="button" 
+                  class="p-button-rounded p-button-text" (click)="addGiftToBasket(item.id)">➕</button>
+              </div> -->
+
+              <!-- מחיר כולל -->
+              <span class="total-price" *ngIf="item.quantity > 1">
+                סה"כ: ₪{{ item.giftPrice * item.quantity }}
+              </span>
+
+            </div>
           </div>
+
+          <!-- כפתור מחיקה בצד -->
+          <div class="remove-wrapper">
+            <button pButton type="button"
+              class="p-button-rounded p-button-danger p-button-text"
+              (click)="removeFromBasket(item.id)">
+           🗑️ </button>
+          </div>
+
         </div>
 
-        <ng-template pTemplate="footer">
-          <button pButton type="button" label="הסר מהסל" icon="pi pi-trash" class="p-button-danger"
-            (click)="removeFromBasket(item.id)"></button>
-        </ng-template>
       </p-card>
 
-      <button pButton type="button" label="לרכישה" icon="pi pi-shopping-cart" class="p-button-success checkout-button"
-        (click)="showPaymentDialog = true"></button>
+      <!-- כפתור רכישה -->
+      <div class="checkout-wrapper">
+        <button pButton type="button"
+          label="לרכישה"
+          icon="pi pi-shopping-cart"
+          class="p-button-success checkout-button"
+          (click)="showPaymentDialog = true">
+        </button>
+      </div>
+
     </div>
   </ng-container>
 
@@ -46,40 +84,95 @@
     <div class="loading-msg">טוען סל קניות...</div>
   </ng-template>
 
- <p-dialog header="פרטי תשלום" [(visible)]="showPaymentDialog" [modal]="true" [closable]="true"
-    [draggable]="false" [resizable]="false" class="custom-payment-dialog">
+<p-dialog 
+  header="פרטי תשלום מאובטח" 
+  [(visible)]="showPaymentDialog" 
+  [modal]="true" 
+  [draggable]="false" 
+  [resizable]="false" 
+  [closable]="true"
+  styleClass="custom-payment-dialog"
+  [style]="{width: '100%', maxWidth: '450px'}">
+
+  <div class="payment-container">
     
-    <div class="payment-container">
-        <p class="subtitle">הזן את פרטי האשראי להשלמת הרכישה</p>
-
-        <div class="field-group">
-            <label for="cardNumber">מספר כרטיס</label>
-            <input id="cardNumber" type="text" pInputText placeholder="1234 5678 9012 3456" />
-        </div>
-
-        <div class="field-group">
-            <label for="cardName">שם בעל הכרטיס</label>
-            <input id="cardName" type="text" pInputText placeholder="שם מלא" />
-        </div>
-
-        <div class="row-fields">
-            <div class="field-group">
-                <label for="expiry">תוקף</label>
-                <input id="expiry" type="text" pInputText placeholder="MM/YY" />
-            </div>
-            <div class="field-group">
-                <label for="cvv">CVV</label>
-                <input id="cvv" type="password" pInputText placeholder="123" maxlength="3" />
-            </div>
-        </div>
+    <div class="payment-header-info">
+      <i class="pi pi-lock" style="font-size: 1rem; color: #22c55e;"></i>
+      <span class="subtitle">התשלום מאובטח בתקן PCI-DSS</span>
     </div>
 
-    <ng-template pTemplate="footer">
-        <div class="dialog-actions">
-            <button pButton label="ביטול" class="p-button-text p-button-secondary" (click)="showPaymentDialog = false"></button>
-            <button pButton label="שלם עכשיו" class="p-button-success" (click)="completePayment()"></button>
+    <div class="field-group">
+      <label for="cardNumber">מספר כרטיס אשראי</label>
+      <div class="p-input-icon-left">
+        <i class="pi pi-credit-card"></i>
+        <p-inputMask 
+          id="cardNumber"
+          mask="9999-9999-9999-9999" 
+          placeholder="0000-0000-0000-0000"
+          styleClass="w-full">
+        </p-inputMask>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for="cardName">שם בעל הכרטיס</label>
+      <input 
+        id="cardName" 
+        type="text" 
+        pInputText 
+        placeholder="כפי שמופיע על הכרטיס" 
+        class="w-full" />
+    </div>
+
+    <div class="row-fields">
+      <div class="field-group flex-1">
+        <label for="expiry">תוקף (MM/YY)</label>
+        <p-inputMask 
+          id="expiry"
+          mask="99/99" 
+          placeholder="MM/YY"
+          styleClass="w-full">
+        </p-inputMask>
+      </div>
+
+      <div class="field-group flex-1">
+        <label for="cvv">קוד CVV</label>
+        <div class="p-input-icon-right">
+          <i class="pi pi-question-circle" pTooltip="3 ספרות בגב הכרטיס"></i>
+          <input 
+            id="cvv" 
+            type="password" 
+            pInputText 
+            placeholder="123" 
+            maxlength="3" 
+            class="w-full" />
         </div>
-    </ng-template>
+      </div>
+    </div>
+
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-actions">
+      <button 
+        pButton 
+        type="button"
+        label="ביטול" 
+        class="p-button-text p-button-secondary" 
+        (click)="showPaymentDialog = false">
+      </button>
+      
+      <button 
+        pButton 
+        type="button"
+        label="בצע תשלום" 
+        icon="pi pi-check"
+        class="p-button-success p-shadow-2" 
+        (click)="completePayment()">
+      </button>
+    </div>
+  </ng-template>
+
 </p-dialog>
 
   <p-toast position="top-right"></p-toast>
