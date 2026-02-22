@@ -1,6 +1,53 @@
-/* ===== רקע נקי מודרני ===== */
+/* צביעת שדה רגיל באדום */
+.p-inputtext.invalid {
+  border-color: #ef4444 !important;
+}
+
+/* צביעת שדה הסיסמה של PrimeNG באדום */
+::ng-deep .p-password input.invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 1px #ef4444 !important; /* מוסיף הדגשה ברורה */
+}
+
+/* מוודא שהלייבל של ה-Float Label לא יתנגש באדום */
+.p-float-label input.invalid ~ label {
+  color: #ef4444;
+}
+/* השוואת גדלים בין שדה שם המשתמש לשדה הסיסמה */
+.field {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+/* זה החלק החשוב: מכריח את רכיב הסיסמה להיפרס לכל הרוחב */
+::ng-deep .p-password, 
+::ng-deep .p-password input {
+  width: 100% !important;
+}
+
+.p-inputtext,
+::ng-deep .p-password-input {
+  width: 100% !important; /* רוחב שווה לשניהם */
+  border-radius: 12px !important;
+  padding: 0.85rem 1rem !important;
+  box-sizing: border-box; /* מבטיח שהפדינג לא ירחיב את השדה מעבר למסגרת */
+}
+
+/* עיצוב כפתור התחברות */
+.main-btn {
+  width: 100% !important;
+  border-radius: 12px !important;
+  height: 50px;
+}
+
+
+
+
+
+
+
 .login-page {
-  height: 100vh;
+  height: 89vh;
   display: flex;
   justify-content: center;
   align-items: center;

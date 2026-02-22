@@ -21,15 +21,20 @@
       <div class="field">
         <span class="p-float-label">
           <p-password inputId="Password" formControlName="Password" [toggleMask]="true" [feedback]="false"
-            styleClass="w-full" [inputStyleClass]="
-              loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched
-              ? 'invalid'
-              : ''
-            ">
+            styleClass="w-full"
+            [inputStyleClass]="(loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched) ? 'invalid' : ''">
           </p-password>
           <label for="Password">סיסמה</label>
         </span>
-        <small *ngIf="loginForm.get('Password')?.invalid && loginForm.get('Password')?.touched" class="error-msg">
+
+        <small *ngIf="loginForm.get('Password')?.hasError('required') && loginForm.get('Password')?.touched"
+          class="error-msg">
+          <i class="pi pi-exclamation-circle"></i>
+          חובה להזין סיסמה
+        </small>
+
+        <small *ngIf="loginForm.get('Password')?.hasError('minlength') && loginForm.get('Password')?.dirty"
+          class="error-msg">
           <i class="pi pi-exclamation-circle"></i>
           לפחות 6 תווים
         </small>

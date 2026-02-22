@@ -1,105 +1,208 @@
 
 
-
 .register-page {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background:
-    radial-gradient(circle at 20% 20%, #e0f7fa, transparent 40%),
-    radial-gradient(circle at 80% 80%, #f3e5f5, transparent 40%),
-    #f8fafc;
-  font-family: "Inter", sans-serif;
-  padding: 2rem; /* רווח מסביב למניעת חיתוך במסכים קטנים */
-  box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh; /* מבטיח מרכזיות */
+    background: #f4f7f9;
+    padding: 20px;
 }
 
 .register-card {
-  width: 450px;
-  max-height: 97vh; /* לא יותר מ-90% מגובה המסך */
-  overflow-y: auto; /* גלילה פנימית אם צריך */
-  padding: 1.5rem;
-  border-radius: 24px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 600px; /* רוחב רחב יותר כדי להכיל 2 עמודות */
+    direction: rtl;
+}
+
+.register-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* סידור השדות ב-2 עמודות */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* שתי עמודות שוות */
+    gap: 1.2rem; /* רווח בין השדות */
+    margin-top: 2rem;
+}
+
+.field {
+    margin-bottom: 0.5rem; /* צמצום המרווח האנכי למניעת גלילה */
+}
+
+/* עיצוב ה-Input */
+::ng-deep .p-inputtext, 
+::ng-deep .p-password input {
+    width: 100% !important;
+    padding: 0.6rem !important; /* קצת יותר דחוס */
+    border-radius: 6px !important;
+}
+
+/* עיצוב הכפתור */
+::ng-deep .main-btn {
+    width: 100%;
+    background: #66d1ab !important;
+    border: none !important;
+    padding: 0.8rem !important;
+    margin-top: 1.5rem;
+    border-radius: 6px !important;
+    font-weight: bold;
+}
+
+/* התאמה למסכים קטנים - חוזר לעמודה אחת */
+@media (max-width: 500px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .register-card {
+        padding: 1.5rem;
+    }
+}
+
+
+
+/* ===== רקע ומרכוז - ללא גלילה חיצונית ===== */
+.register-page {
+  height: 89vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden ; /* מונע גלילה של כל הדף */
+  margin: -18px 0 0 -18px; /* תיקון מרווחים חיצוניים */
+  background: radial-gradient(circle at 20% 20%, #e0f2fe, transparent 40%),
+              radial-gradient(circle at 80% 80%, #ede9fe, transparent 40%),
+              #f8fafc;
+  font-family: "Inter", sans-serif;
+  direction: rtl;
+}
+
+/* ===== כרטיס ההרשמה ===== */
+.register-card {
+  width: 420px;
+  max-height: 100vh;
+  // padding: 2rem;
   background: white;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.08), 0 10px 25px rgba(0,0,0,0.05);
+  border-radius: 24px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  transition: 0.3s;
-    max-width: 90%;
-}
-label{
-    font-size: small;
-}
-.register-card::-webkit-scrollbar {
-  width: 6px;
+  // gap: 1rem;
+  overflow-y: auto; /* גלילה פנימית רק אם הטופס ארוך מדי */
+  box-sizing: border-box;
 }
 
-.register-card::-webkit-scrollbar-thumb {
-  background-color: rgba(124,77,255,0.5);
-  border-radius: 3px;
+/* עיצוב סרגל גלילה פנימי עדין */
+.register-card::-webkit-scrollbar { width: 5px; }
+.register-card::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+/* ===== כותרת ===== */
+.register-header {
+  text-align: center;
+  margin-bottom: 18px;
 }
 
-.register-card:hover { transform: translateY(-6px); }
-h2{
-    font-size: 21px;
+.register-icon {
+  font-size: 40px;
+  color: #6366f1;
+  margin-bottom: 10px;
 }
 
-.register-header { 
-    text-align: center;
-    size: 80%;
+.register-header h2 {
+  margin: 0;
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 22px;
 }
-.register-icon { font-size: 38px; color: #7c4dff; margin-bottom: 8px; }
-.register-header h2 { margin: 0; font-weight: 600; color: #1e293b; }
-.register-header .underline {
-  width: 30px; height: 2px; background: #7c4dff; margin: 7px auto;
-  border-radius: 3px;
+
+.register-header span {
+  font-size: 13px;
+  color: #64748b;
 }
-.register-header span { font-size: 9px; color: #64748b; }
 
-.register-form { display: flex; flex-direction: column;align-items: center; }
+/* ===== טופס ושדות ===== */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  // gap: 0.8rem;
+}
 
-.p-inputtext, .p-password-input {
-  border-radius: 14px !important;
-  padding: 0.566rem 0.3rem !important;
+.field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* תיקון רוחב שווה לכל השדות כולל סיסמה */
+::ng-deep .p-password, 
+::ng-deep .p-password input {
+  width: 100% !important;
+}
+
+.p-inputtext,
+::ng-deep .p-password-input {
+  width: 100% !important;
+  border-radius: 12px !important;
+  padding: 0.8rem 1rem !important;
   border: 1px solid #e2e8f0 !important;
-  transition: 0.2s;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
-.p-inputtext:focus, .p-password-input:focus {
-  border-color: #7c4dff !important;
-  box-shadow: 0 0 0 3px rgba(124,77,255,0.15) !important;
+/* פוקוס וצבעי שגיאה */
+.p-inputtext:focus, ::ng-deep .p-password-input:focus {
+  border-color: #6366f1 !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15) !important;
 }
 
-.invalid { border-color: #ef4444 !important; }
+.invalid {
+  border-color: #ef4444 !important;
+}
 
+::ng-deep .p-password input.invalid {
+  border-color: #ef4444 !important;
+}
+
+/* הודעות שגיאה */
 .error-msg {
-  color: #ef4444; font-size: 6px; margin-top: 2px;
-  display: flex; align-items: center; gap: 6px;
-  animation: shake 0.25s ease;
+  color: #ef4444;
+  font-size: 11px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
+/* ===== כפתורים ===== */
 .main-btn {
-  border-radius: 14px !important;
-  background: linear-gradient(135deg, #7c4dff, #4f46e5) !important;
+  width: 100% !important;
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
   border: none !important;
-  font-weight: 400; padding: 0.6rem !important;
-  transition: 0.25s;
+  padding: 0.8rem !important;
+  font-weight: 600 !important;
+  margin-top: 10px;
 }
-.main-btn:hover { transform: scale(1.03); box-shadow: 0 8px 20px rgba(124,77,255,0.3); }
 
 .login-link {
-  margin-top: 6px; background: none; border: none;
-  color: #7c4dff; cursor: pointer; font-size: 13px;
-  transition: 0.2s;
-  padding: 0.05rem;
+  background: none;
+  border: none;
+  color: #6366f1;
+  cursor: pointer;
+  font-size: 13px;
+  margin-top: 10px;
+  text-align: center;
 }
+
 .login-link:hover { text-decoration: underline; }
 
-.input-row { display: flex;    gap: -0.5rem;
-    flex-direction: column; }
-
-// .fade-in { animation: fadeIn 0.6s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes shake { 0%{transform:translateX(0);}25%{transform:translateX(-3px);}50%{transform:translateX(3px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);} }
+/* אנימציה */
+.fade-in { animation: fadeIn 0.6s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

@@ -200,6 +200,11 @@ export class AdminNavbar implements OnInit, OnDestroy {
         { label: 'הכרטיסים שנבחרו ', link: '/cart' }
       ];
     }
+    else if(!role){
+      this.leftMenu = [
+        { label: 'מתנות', link: '/gifts' },
+      ];
+    }
 
     // צד ימין - כפתורים התחברות/יציאה
     this.rightMenu = [];
@@ -208,8 +213,8 @@ export class AdminNavbar implements OnInit, OnDestroy {
         { label: 'יציאה', action: () => this.onLogout() }
       ];
     } else {
-      this.rightMenu = [
-        { label: 'התחברות', link: '/login' }
+      this.rightMenu = [ 
+        { label: 'התחברות', link: '/login' },       
       ];
     }
   }

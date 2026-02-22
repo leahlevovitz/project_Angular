@@ -1,22 +1,84 @@
-/* מבטיח שכל השורות בטופס יתפסו את אותו רוחב */
-.p-fluid .field {
+/* ============================= */
+/*  Dialog Center + RTL Layout   */
+/* ============================= */
+
+/* מיקום מושלם במרכז המסך */
+:host ::ng-deep .p-dialog-mask {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* כיווניות ימין לשמאל */
+.donor-dialog {
+  direction: rtl;
+  text-align: right;
+}
+
+/* רוחב אחיד לכל השדות */
+.donor-dialog .p-fluid .field {
   width: 100%;
 }
 
-/* הדגשת שדה חובה */
-label span {
-  color: #ef4444; /* צבע אדום לסימן הכוכבית */
-  margin-right: 4px;
-}
-
-/* מרווח בין האלמנטים בתוך הדיאלוג */
+/* ריווח פנימי בדיאלוג */
 .donor-dialog .p-dialog-content {
-  padding-top: 1.5rem !important;
+  padding: 1.5rem 1.5rem 1.25rem 1.5rem !important;
 }
 
-/* עיצוב כפתורים */
-.flex.gap-2 {
+/* ============================= */
+/*  Labels + Required mark       */
+/* ============================= */
+
+.donor-dialog label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.donor-dialog label span {
+  color: #ef4444;
+  margin-right: 4px; /* RTL */
+}
+
+/* ============================= */
+/*  Inputs Styling               */
+/* ============================= */
+
+.donor-dialog input.p-inputtext {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.donor-dialog input.ng-invalid.ng-dirty {
+  border-color: #ef4444;
+}
+
+.donor-dialog .p-error {
+  font-size: 0.8rem;
+}
+
+/* ============================= */
+/*  Buttons Layout               */
+/* ============================= */
+
+.donor-dialog .flex {
   display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
+  justify-content: flex-start; /* ב-RTL זה יופיע בצד ימין */
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* כפתור ראשי מודגש */
+.donor-dialog .p-button-primary {
+  min-width: 90px;
+}
+
+/* ============================= */
+/*  Divider Styling              */
+/* ============================= */
+
+.donor-dialog hr {
+  margin: 1.25rem 0;
+  border: none;
+  border-top: 1px solid #e5e7eb;
 }

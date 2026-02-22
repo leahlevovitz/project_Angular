@@ -14,11 +14,9 @@
 
       <div class="field">
         <span class="p-float-label">
-          <input
-            pInputText
-            formControlName="FullName"
-            [class.invalid]="registerForm.get('FullName')?.invalid && registerForm.get('FullName')?.touched"/>
-          <label>שם מלא</label>
+          <input placeholder="שם מלא" pInputText formControlName="FullName"
+            [class.invalid]="registerForm.get('FullName')?.invalid && registerForm.get('FullName')?.touched" />
+          <!-- <label>שם מלא</label> -->
         </span>
         <small *ngIf="registerForm.get('FullName')?.touched && registerForm.get('FullName')?.invalid" class="error-msg">
           <i class="pi pi-exclamation-circle"></i>
@@ -28,11 +26,9 @@
 
       <div class="field">
         <span class="p-float-label">
-          <input
-            pInputText
-            formControlName="userName"
-            [class.invalid]="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched"/>
-          <label>שם משתמש</label>
+          <input placeholder="שם משתמש" pInputText formControlName="userName"
+            [class.invalid]="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched" />
+          <!-- <label>שם משתמש</label> -->
         </span>
         <small *ngIf="registerForm.get('userName')?.touched && registerForm.get('userName')?.invalid" class="error-msg">
           <i class="pi pi-exclamation-circle"></i>
@@ -42,35 +38,33 @@
 
       <div class="field">
         <span class="p-float-label">
-          <input
-            pInputText
-            type="email"
-            formControlName="Email"
-            [class.invalid]="registerForm.get('Email')?.invalid && registerForm.get('Email')?.touched"/>
-          <label>אימייל</label>
+          <input placeholder="מייל" pInputText type="email" formControlName="Email"
+            [class.invalid]="registerForm.get('Email')?.invalid && registerForm.get('Email')?.touched" />
+          <!-- <label>אימייל</label> -->
         </span>
-        <small *ngIf="registerForm.get('Email')?.touched && registerForm.get('Email')?.errors?.['required']" class="error-msg">
+        <small *ngIf="registerForm.get('Email')?.touched && registerForm.get('Email')?.errors?.['required']"
+          class="error-msg">
           <i class="pi pi-exclamation-circle"></i> נא למלא אימייל
         </small>
-        <small *ngIf="registerForm.get('Email')?.touched && registerForm.get('Email')?.errors?.['pattern']" class="error-msg">
+        <small *ngIf="registerForm.get('Email')?.touched && registerForm.get('Email')?.errors?.['pattern']"
+          class="error-msg">
           <i class="pi pi-exclamation-circle"></i> נא למלא אימייל חוקי
         </small>
       </div>
-
       <div class="field">
-        <span class="p-float-label">
-          <p-password
-            formControlName="PasswordHash"
-            [toggleMask]="true"
-            [feedback]="false"
-            [inputStyleClass]="registerForm.get('PasswordHash')?.invalid && registerForm.get('PasswordHash')?.touched ? 'invalid' : ''">
-          </p-password>
-          <label>סיסמה</label>
-        </span>
-        <small *ngIf="registerForm.get('PasswordHash')?.touched && registerForm.get('PasswordHash')?.errors?.['required']" class="error-msg">
+        <p-password placeholder="סיסמה" inputId="Password" formControlName="PasswordHash" [toggleMask]="true"
+          [feedback]="false"
+          [inputStyleClass]="registerForm.get('PasswordHash')?.invalid && registerForm.get('PasswordHash')?.touched ? 'invalid' : ''">
+        </p-password>
+
+        <small
+          *ngIf="registerForm.get('PasswordHash')?.touched && registerForm.get('PasswordHash')?.errors?.['required']"
+          class="error-msg">
           <i class="pi pi-exclamation-circle"></i> חובה להזין סיסמה
         </small>
-        <small *ngIf="registerForm.get('PasswordHash')?.touched && registerForm.get('PasswordHash')?.errors?.['minlength']" class="error-msg">
+        <small
+          *ngIf="registerForm.get('PasswordHash')?.touched && registerForm.get('PasswordHash')?.errors?.['minlength']"
+          class="error-msg">
           <i class="pi pi-exclamation-circle"></i> הסיסמה חייבת להכיל לפחות 6 תווים
         </small>
       </div>
@@ -78,42 +72,38 @@
       <div class="input-row">
         <div class="field">
           <span class="p-float-label">
-            <input
-              pInputText
-              formControlName="phone"
-              [class.invalid]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"/>
-            <label>טלפון</label>
+            <input placeholder="טלפון" pInputText formControlName="phone"
+              [class.invalid]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" />
+            <!-- <label>טלפון</label> -->
           </span>
-          <small *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['required']" class="error-msg">
+          <small *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['required']"
+            class="error-msg">
             <i class="pi pi-exclamation-circle"></i> חובה להזין טלפון
           </small>
-          <small *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['pattern']" class="error-msg">
+          <small *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['pattern']"
+            class="error-msg">
             <i class="pi pi-exclamation-circle"></i> נא למלא מספר טלפון חוקי (9-10 ספרות)
           </small>
         </div>
 
         <div class="field">
           <span class="p-float-label">
-            <input
-              pInputText
-              formControlName="adress"
-              [class.invalid]="registerForm.get('adress')?.invalid && registerForm.get('adress')?.touched"/>
-            <label>כתובת</label>
+            <input placeholder="כתובת" pInputText formControlName="adress"
+              [class.invalid]="registerForm.get('adress')?.invalid && registerForm.get('adress')?.touched" />
+            <!-- <label>כתובת</label> -->
           </span>
-          <small *ngIf="registerForm.get('adress')?.touched && registerForm.get('adress')?.errors?.['required']" class="error-msg">
+          <small *ngIf="registerForm.get('adress')?.touched && registerForm.get('adress')?.errors?.['required']"
+            class="error-msg">
             <i class="pi pi-exclamation-circle"></i> חובה להזין כתובת
           </small>
-          <small *ngIf="registerForm.get('adress')?.touched && registerForm.get('adress')?.errors?.['pattern']" class="error-msg">
+          <small *ngIf="registerForm.get('adress')?.touched && registerForm.get('adress')?.errors?.['pattern']"
+            class="error-msg">
             <i class="pi pi-exclamation-circle"></i> כתובת יכולה להכיל רק אותיות ורווחים
           </small>
         </div>
       </div>
 
-      <p-button
-        label="להרשמה והשתתפות"
-        icon="pi pi-check"
-        type="submit"
-        styleClass="main-btn w-full"
+      <p-button label="להרשמה והשתתפות" icon="pi pi-check" type="submit" styleClass="main-btn w-full"
         [disabled]="registerForm.invalid">
       </p-button>
 

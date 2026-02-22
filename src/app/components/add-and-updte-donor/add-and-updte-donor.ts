@@ -17,7 +17,7 @@ export class AddAndUpdateDonorComponent implements OnChanges {
 
   private donorSrv = inject(DonorService);
 
-  @Input() id: number = -1; // -1 = הוספה
+  @Input() id: number = -1; 
   @Output() closeEdit = new EventEmitter<boolean>();
 
   visible: boolean = true;
