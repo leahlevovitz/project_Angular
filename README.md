@@ -1,59 +1,48 @@
-# Project
+# 🎁 Chinese Auction: Angular Client
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.3.
+> The front end of an online **Chinese auction (raffle)** platform: buyers browse gifts and buy tickets; admins manage gifts, donors, purchasers and run the lottery.
 
-## Development server
+![Angular](https://img.shields.io/badge/Angular-20-DD0031?logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-20-2DD4BF)
+![SCSS](https://img.shields.io/badge/SCSS-CC6699?logo=sass&logoColor=white)
 
-To start a local development server, run:
+## ✨ Features
+**For buyers**
+- 🎁 Gift catalog with images and details
+- 🛒 Shopping basket for raffle tickets
+- 🔐 Registration and login
 
+**For admins**
+- ➕ Add, edit and delete gifts
+- 🤝 Manage donors
+- 👥 View purchasers per gift
+- 🎰 Run the lottery and see the winners
+- 💰 Total revenue report
+
+## 🏗️ Structure
+```
+src/app/
+├── components/     # gift-list, basket, donors, purchasers, add-gift, admin-navbar, auth/login & register
+├── service/        # auth, gift, donor, lottery, purchasers, user (HTTP services)
+├── models/         # Gift, Donor, Lottery, Purchasers, User, TotalRevenueDTO
+└── app.routes.ts   # client-side routing
+```
+- **Standalone components** and Angular Router
+- **Service layer** separating HTTP logic from the UI
+- **Typed models** shared across the app
+- **PrimeNG** components for tables, dialogs and forms
+
+## 🔌 Back end
+Works against a REST API for gifts, donors, purchases and the lottery.
+The same domain is also implemented as a full microservices system: **[doker_project_AI](https://github.com/leahlevovitz/doker_project_AI)**.
+
+## 🚀 Run locally
 ```bash
+npm install
 ng serve
 ```
+Open **http://localhost:4200**.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+👩‍💻 Built by **Leah Levovitz** · [LinkedIn](https://www.linkedin.com/in/leahlevovitz) · [GitHub](https://github.com/leahlevovitz)
