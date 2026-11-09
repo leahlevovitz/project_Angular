@@ -2,11 +2,6 @@
 
 > The front end of an online **Chinese auction (raffle)** platform: buyers browse gifts and buy tickets; admins manage gifts, donors, purchasers and run the lottery.
 
-![Angular](https://img.shields.io/badge/Angular-20-DD0031?logo=angular&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
-![PrimeNG](https://img.shields.io/badge/PrimeNG-20-2DD4BF)
-![SCSS](https://img.shields.io/badge/SCSS-CC6699?logo=sass&logoColor=white)
-
 ## ✨ Features
 **For buyers**
 - 🎁 Gift catalog with images and details
@@ -45,4 +40,4 @@ ng serve
 Open **http://localhost:4200**.
 
 ---
-👩‍💻 Built by **Leah Levovitz** · [LinkedIn](https://www.linkedin.com/in/leahlevovitz) · [GitHub](https://github.com/leahlevovitz)
+👩‍💻 Built by **Leah Levovitz** · [GitHub](https://github.com/leahlevovitz)
